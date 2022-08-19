@@ -1,49 +1,57 @@
 package programmers;
 
 import java.util.*;
-
+import java.util.Map.Entry;
 public class bfs {
-    int right,bottom;
-    int[][] visit;
-    int[] x={1,0,-1,0} , y= {0,1,0,-1};
-    public int solution(int[][] maps) {
-        int answer=0;
-        right = maps[0].length-1;
-        bottom = maps.length-1;
-        visit = new int[bottom+1][right+1];
-        answer = bfs(maps);
-        return answer;
-    }
-    public int bfs(int [][] maps){
-        Queue<int[]> queue = new LinkedList<>();
-        queue.offer(new int[]{0,0});
-        visit[0][0] = 1;
-        int count =0;
-        while(!queue.isEmpty()){
-            int size = queue.size();
-            count++;
-            while(--size >=0){
-                int[] pos = queue.poll(); //현위치
-
-                if(pos[0]==bottom && pos[1]==right){
-                    return count;
-                }
-                for(int i =0;i<4;i++){ //하우상좌 순서
-                    int newX = pos[0] + x[i];
-                    int newY = pos[1] + y[i];
-
-                    if(newX <0 || newY<0 || newX>bottom || newY>right || visit[newX][newY]==1 || maps[newX][newY]==0){
-                        continue;
-                    }
-                    visit[newX][newY]=1;
-                    queue.offer(new int[]{newX,newY});
-                }
+    public ArrayList<Integer> solution(String[] genres, int[] plays) {
+        ArrayList<Integer> answer = new ArrayList<>();
+        int c=0;
+        HashMap<String,Integer> hm = new HashMap<>();
+        HashMap<String,ArrayList<int[]>> ind = new HashMap<>();
+        for(int i=0;i<genres.length;i++){
+            if(hm.containsKey(genres[i])){
+                hm.put(genres[i],hm.get(genres[i])+plays[i]);
+            }else{
+                hm.put(genres[i],plays[i]);
+                ind.put(genres[i],new ArrayList<>());
 
             }
+            ind.get(genres[i]).add(new int[]{plays[i],i});
         }
-        return -1;
+
+        List<Entry<String, Integer>> list_entries = new ArrayList<Entry<String, Integer>>(hm.entrySet());
+        Collections.sort(list_entries, new Comparator<Entry<String, Integer>>() {
+            public int compare(Entry<String, Integer> obj1, Entry<String, Integer> obj2)
+            {
+                return obj2.getValue().compareTo(obj1.getValue());
+            }
+        });
+        for(Entry<String, Integer> entry : list_entries) {
+            int[][] tmp= new int[ind.get(entry.getKey()).size()][2];
+            for(int i=0;i<ind.get(entry.getKey()).size();i++)
+                tmp[i] = ind.get(entry.getKey()).get(i);
+            Arrays.sort(tmp,(o2,o1) ->{
+                if(o1[0]==o2[0]){
+                    return Integer.compare(o1[1],o2[1]);
+                }else{
+                    return Integer.compare(o1[0],o2[0]);
+                }
+            });
+            answer.add(tmp[0][1]);
+            if(tmp.length>1)
+                answer.add(tmp[1][1]);
+        }
+        return answer;
     }
     public static void main(String[] args) {
+        bfs b = new bfs();
+        String[] genres = {"a", "b", "c", "d", "a", "d", "d", "d", "a", "a", "c", "c"};
+        System.out.println(Arrays.asList(genres).indexOf("c"));
+        int[] plays = {100, 300, 400, 150, 100, 300, 200, 600, 700, 110, 900, 9000};
+        ArrayList<Integer> re = b.solution(genres,plays);
+//        for(Integer i : re){
+//            System.out.println(i);
+//        }
 
     }
 }
