@@ -10,7 +10,6 @@ public class NumberCard {
         Scanner s = new Scanner(System.in);
         n = s.nextInt();
         card = new int[n];
-
         for(int i =0; i<n;i++){
             card[i]=s.nextInt();
         }
@@ -39,6 +38,6 @@ public class NumberCard {
             }
         }
         System.out.print("0 ");
-        return;
+        
     }
 }
