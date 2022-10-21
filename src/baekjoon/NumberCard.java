@@ -38,6 +38,6 @@ public class NumberCard {
             }
         }
         System.out.print("0 ");
-        
+
     }
 }
