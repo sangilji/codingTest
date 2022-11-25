@@ -16,23 +16,22 @@ public class chart {
 
 			for (String s : cmd) {
 				String[] tmp = s.split(" ");
-				switch (tmp[0]) {
-					case "D" -> k += Integer.parseInt(tmp[1]);
-					case "U" -> k -= Integer.parseInt(tmp[1]);
-					case "C" -> {
-						trash.push(new int[] {arr.get(k), k});  // 4 추가
-						arr.remove(k);
-						if (arr.size() == k) {
-							k--;
-						}
+				if ("D".equals(tmp[0])) {
+					k += Integer.parseInt(tmp[1]);
+				} else if ("U".equals(tmp[0])) {
+					k -= Integer.parseInt(tmp[1]);
+				} else if ("C".equals(tmp[0])) {
+					trash.push(new int[] {arr.get(k), k});  // 4 추가
+					arr.remove(k);
+					if (arr.size() == k) {
+						k--;
 					}
-					default -> {
-						int[] t = trash.pop();
-						if (k >= t[1]) {
-							k++;
-						}
-						arr.add(t[1], t[0]);
+				} else {
+					int[] t = trash.pop();
+					if (k >= t[1]) {
+						k++;
 					}
+					arr.add(t[1], t[0]);
 				}
 			}
 
