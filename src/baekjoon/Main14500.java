@@ -47,7 +47,7 @@ public class Main14500 {
 			if (tx < 0 || tx >= n || ty < 0 || ty >= m || visit[tx][ty]) {
 				continue;
 			}
-			makePurple(i+1, x,y, depth + 1, sum + map[tx][ty]);
+			makePurple(i + 1, x, y, depth + 1, sum + map[tx][ty]);
 		}
 	}
 
