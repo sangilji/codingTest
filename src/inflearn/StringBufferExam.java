@@ -1,7 +1,9 @@
 package inflearn;
-import java.util.*;
+
+import java.util.Random;
+
 public class StringBufferExam {
-    public StringBuffer randomName(){
+    public StringBuffer randomName() {
         StringBuffer sb = new StringBuffer();
         String[] firstNames = {"Tod", "John", "Michael"};
         String[] lastNames = {"Smith", "Brown", "Davis"};

@@ -3,7 +3,6 @@ package swea;
 import java.util.Comparator;
 import java.util.PriorityQueue;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
 public class Main1249 {
     private static int[] dx = {1, -1, 0, 0};

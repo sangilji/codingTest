@@ -4,26 +4,27 @@ import java.util.Scanner;
 
 public class Sdoku {
     static int[][] sdoku;
+
     public static void main(String[] args) {
         sdoku = new int[9][9];
         Scanner s = new Scanner(System.in);
         for (int i = 0; i < 9; i++) {
-            for(int j=0;j<9;j++){
-                sdoku[i][j]=s.nextInt();
+            for (int j = 0; j < 9; j++) {
+                sdoku[i][j] = s.nextInt();
             }
         }
-        f(0,0);
+        f(0, 0);
 
     }
 
     private static void f(int a, int b) {
-        if(b==9){
-            f(a+1, 0);
+        if (b == 9) {
+            f(a + 1, 0);
             return;
         }
-        if(a==9){
-            for(int i =0;i<9;i++){
-                for(int j=0;j<9;j++){
+        if (a == 9) {
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
                     System.out.print(sdoku[i][j] + " ");
                 }
                 System.out.println();
@@ -31,10 +32,10 @@ public class Sdoku {
             System.exit(0);
 
         }
-        if(sdoku[a][b]==0){
-            for(int i =1;i<=9;i++){
-                if(possibility(a,b,i)){
-                    sdoku[a][b]=i;
+        if (sdoku[a][b] == 0) {
+            for (int i = 1; i <= 9; i++) {
+                if (possibility(a, b, i)) {
+                    sdoku[a][b] = i;
                     f(a, b + 1);
                 }
             }
@@ -42,7 +43,7 @@ public class Sdoku {
             return;
         }
 
-        f(a,b+1);
+        f(a, b + 1);
     }
 
     private static boolean possibility(int a, int b, int value) {

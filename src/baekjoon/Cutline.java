@@ -9,10 +9,10 @@ public class Cutline {
         int a = s.nextInt();
         int b = s.nextInt();
         int[] c = new int[a];
-        for(int i =0;i<a;i++){
-            c[i]=s.nextInt();
+        for (int i = 0; i < a; i++) {
+            c[i] = s.nextInt();
         }
         Arrays.sort(c);
-        System.out.println(c[c.length-b]);
+        System.out.println(c[c.length - b]);
     }
 }

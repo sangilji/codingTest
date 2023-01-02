@@ -1,7 +1,6 @@
 package swea;
 
 import java.util.Scanner;
-import java.io.FileInputStream;
 
 public class Main1974 {
     public static void main(String args[]) throws Exception {

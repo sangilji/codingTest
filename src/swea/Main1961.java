@@ -19,7 +19,7 @@ public class Main1961 {
                     map[i][j] = sc.nextInt();
                 }
             }
-            print(map,test_case);
+            print(map, test_case);
 
 
         }
@@ -37,7 +37,7 @@ public class Main1961 {
             }
             sb.append(" ");
             for (int i = 0; i < map.length; i++) {
-                sb.append(map[i][map.length-pos-1]);
+                sb.append(map[i][map.length - pos - 1]);
             }
             sb.append("\n");
         }

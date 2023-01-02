@@ -4,21 +4,21 @@ import java.util.Scanner;
 
 public class BasuAndYaksu5086 {
     public static void main(String[] args) {
-        int a,b;
+        int a, b;
         Scanner s = new Scanner(System.in);
-        do{
-            a=s.nextInt();
-            b=s.nextInt();
-            if(a==0&& b==0){
+        do {
+            a = s.nextInt();
+            b = s.nextInt();
+            if (a == 0 && b == 0) {
                 break;
             }
-            if(a%b==0){
+            if (a % b == 0) {
                 System.out.println("multiple");
-            } else if (b%a==0) {
+            } else if (b % a == 0) {
                 System.out.println("factor");
-            } else{
+            } else {
                 System.out.println("neither");
             }
-        }while(true);
+        } while (true);
     }
 }
