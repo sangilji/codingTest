@@ -18,7 +18,7 @@ public class Main2606 {
         for (int i = 0; i < network; i++) {
             int a = s.nextInt();
             int b = s.nextInt();
-            map[a][b] = 1;
+            map[a][b] = map[b][a] = 1;
         }
         bfs(1);
         System.out.println(count);
@@ -27,6 +27,7 @@ public class Main2606 {
     private static void bfs(int i) {
         Queue<Integer> q = new LinkedList<>();
         q.add(i);
+        visit[i] = true;
         while (!q.isEmpty()) {
             int tmp = q.poll();
             for (int j = 1; j < map.length; j++) {
