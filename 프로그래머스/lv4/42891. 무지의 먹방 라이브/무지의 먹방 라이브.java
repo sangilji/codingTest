@@ -29,6 +29,6 @@ class Solution {
          if(answer!=0){
             return arr.get((int)(k-answer)%arr.size()) + 1;
         }
-        return arr.get((int) (((k%arr.size()) -(answer%arr.size()))%arr.size())) +1;
+        return arr.get((int) (k%arr.size())) +1;
     }
 }
