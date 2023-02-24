@@ -34,35 +34,38 @@ public class Main {
             }
         }
 
+        Arrays.sort(ab);
         Arrays.sort(cd);
         long count = 0;
-        Map<Integer, Integer> map = new HashMap<>();
-
-        for (int start = 0; start < n * n; start++) {
+        int start = 0;
+        int last = cd.length - 1;
+        while (start < n * n && last >= 0) {
             int a = ab[start];
-            int b = Arrays.binarySearch(cd, -a);
-            if (b >= 0) {
-                if (map.containsKey(-a)){
-                    count += map.get(-a);
-                    continue;
+            int b = cd[last];
+            if (a + b > 0) {
+                last--;
+            } else if (a + b < 0) {
+                start++;
+            } else {
+                int aCount = 0;
+                for (int i = start; i < ab.length; i++) {
+                    if (a == ab[i]) {
+                        aCount++;
+                    } else {
+                        break;
+                    }
                 }
                 int bCount = 0;
-                for (int i = b; i >= 0; i--) {
-                    if (-a == cd[i]) {
+                for (int i = last; i >= 0; i--) {
+                    if (b == cd[i]) {
                         bCount++;
                     } else {
                         break;
                     }
                 }
-                for (int i = b+1; i < n*n; i++) {
-                    if (-a == cd[i]) {
-                        bCount++;
-                    } else {
-                        break;
-                    }
-                }
-                map.put(-a, bCount);
-                count += bCount;
+                count += (long) aCount * bCount;
+                start += aCount;
+                last -= bCount;
             }
         }
 
