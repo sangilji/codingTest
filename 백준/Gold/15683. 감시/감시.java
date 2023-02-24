@@ -6,18 +6,17 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
-
 public class Main {
     static int n;
     static int m;
     static int[][] map;
     static List<CCTV> cctvList;
     static int[][] copyMap;
-    static int[] dx = {0,1 , 0, -1};
-    static int[] dy = {1,0 , -1, 0};
-    static int min =Integer.MAX_VALUE;
+    static int[] dx = {0, 1, 0, -1};
+    static int[] dy = {1, 0, -1, 0};
+    static int min = Integer.MAX_VALUE;
 
-    static class CCTV{
+    static class CCTV {
         int x;
         int y;
         int number;
@@ -42,8 +41,8 @@ public class Main {
             st = new StringTokenizer(br.readLine());
             for (int j = 0; j < m; j++) {
                 map[i][j] = Integer.parseInt(st.nextToken());
-                if (map[i][j]>=1 && map[i][j]<=5){
-                    cctvList.add(new CCTV(i,j,map[i][j]));
+                if (map[i][j] >= 1 && map[i][j] <= 5) {
+                    cctvList.add(new CCTV(i, j, map[i][j]));
                 }
             }
         }
@@ -52,9 +51,9 @@ public class Main {
     }
 
     private static void dfs(int depth) {
-        if (depth == cctvList.size()){
+        if (depth == cctvList.size()) {
             for (int i = 0; i < n; i++) {
-                copyMap[i] = Arrays.copyOf(map[i],m);
+                copyMap[i] = Arrays.copyOf(map[i], m);
             }
             makeCCTV();
             findMin();
@@ -63,7 +62,7 @@ public class Main {
 
         for (int i = 0; i < 4; i++) {
             cctvList.get(depth).pos = i;
-            dfs(depth+1);
+            dfs(depth + 1);
         }
     }
 
@@ -71,7 +70,7 @@ public class Main {
         int tmp = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (copyMap[i][j]==0){
+                if (copyMap[i][j] == 0) {
                     tmp++;
                 }
             }
@@ -80,48 +79,48 @@ public class Main {
     }
 
     private static void makeCCTV() {
-        for (CCTV cctv: cctvList) {
-            int x =cctv.x;
-            int y =cctv.y;
+        for (CCTV cctv : cctvList) {
+            int x = cctv.x;
+            int y = cctv.y;
             int number = cctv.number;
             int pos = cctv.pos;
 
-            if (number == 1){
-                makePos(x,y,pos);
-            } else if (number == 2){
-                if (pos == 0 || pos ==2){
-                    makePos(x,y,0);
-                    makePos(x,y,2);
+            if (number == 1) {
+                makePos(x, y, pos);
+            } else if (number == 2) {
+                if (pos == 0 || pos == 2) {
+                    makePos(x, y, 0);
+                    makePos(x, y, 2);
                 } else {
-                    makePos(x,y,1);
-                    makePos(x,y,3);
+                    makePos(x, y, 1);
+                    makePos(x, y, 3);
                 }
-            } else if (number == 3){
-                makePos(x,y,pos);
-                makePos(x,y,(pos+1)%4);
-            } else if (number == 4){
-                makePos(x,y,pos);
-                makePos(x,y,(pos+1)%4);
-                makePos(x,y,(pos+2)%4);
+            } else if (number == 3) {
+                makePos(x, y, pos);
+                makePos(x, y, (pos + 1) % 4);
+            } else if (number == 4) {
+                makePos(x, y, pos);
+                makePos(x, y, (pos + 1) % 4);
+                makePos(x, y, (pos + 2) % 4);
             } else {
-                makePos(x,y,0);
-                makePos(x,y,1);
-                makePos(x,y,2);
-                makePos(x,y,3);
+                makePos(x, y, 0);
+                makePos(x, y, 1);
+                makePos(x, y, 2);
+                makePos(x, y, 3);
             }
         }
     }
 
     private static void makePos(int x, int y, int pos) {
 
-        while (true){
-            x+= dx[pos];
-            y+= dy[pos];
-            if (x<0||y<0||x>=n||y>=m|| copyMap[x][y]==6){
+        while (true) {
+            x += dx[pos];
+            y += dy[pos];
+            if (x < 0 || y < 0 || x >= n || y >= m || copyMap[x][y] == 6) {
                 break;
             }
-            if (copyMap[x][y]==0){
-                copyMap[x][y]=7;
+            if (copyMap[x][y] == 0) {
+                copyMap[x][y] = 7;
             }
         }
     }
