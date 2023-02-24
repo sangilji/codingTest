@@ -1,40 +1,48 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 
 public class Main {
-    static int[][] map;
-    static boolean[] visit;
-    static int count = 0;
+    static List<Integer>[] virus;
 
-    public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
-        int computer = s.nextInt();
-        int network = s.nextInt();
-        map = new int[computer + 1][computer + 1];
-        visit = new boolean[computer + 1];
-        for (int i = 0; i < network; i++) {
-            int a = s.nextInt();
-            int b = s.nextInt();
-            map[a][b] = map[b][a] = 1;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int computer = Integer.parseInt(br.readLine());
+        int network = Integer.parseInt(br.readLine());
+        virus = new List[computer + 1];
+        for (int i = 0; i < computer + 1; i++) {
+            virus[i] = new ArrayList<>();
         }
-        bfs(1);
-        System.out.println(count);
-    }
+        for (int i = 0; i < network; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            virus[a].add(b);
+            virus[b].add(a);
+        }
 
-    private static void bfs(int i) {
-        Queue<Integer> q = new LinkedList<>();
-        q.add(i);
-        visit[i] = true;
+        boolean[] visit = new boolean[computer + 1];
+
+        Queue<Integer> q = new ArrayDeque<>();
+        q.add(1);
+        int count = 0;
         while (!q.isEmpty()) {
             int tmp = q.poll();
-            for (int j = 1; j < map.length; j++) {
-                if (map[tmp][j] == 1 && !visit[j]) {
-                    q.add(j);
-                    visit[j] = true;
-                    count++;
+
+            if (visit[tmp]) {
+                continue;
+            }
+            visit[tmp] = true;
+            count++;
+            for (int i = 0; i < virus[tmp].size(); i++) {
+                int next = virus[tmp].get(i);
+                if (!visit[next]) {
+
+                    q.add(next);
                 }
             }
         }
+        System.out.println(count - 1);
     }
 }
