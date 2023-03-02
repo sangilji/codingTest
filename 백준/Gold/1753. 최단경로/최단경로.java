@@ -5,73 +5,70 @@ import java.util.*;
 
 public class Main {
     static class Node {
-        int last;
+        int index;
         int cost;
 
-        public Node(int last, int cost) {
-            this.last = last;
+        public Node(int index, int cost) {
+            this.index = index;
             this.cost = cost;
         }
     }
 
-    static int K;
-    static List<List<Node>> nodes = new ArrayList<>();
+    static List<Node>[] nodes;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        int V = Integer.parseInt(st.nextToken());
-        int E = Integer.parseInt(st.nextToken());
-        K = Integer.parseInt(br.readLine());
-
-        for (int i = 0; i < V + 1; i++) {
-            nodes.add(new ArrayList<>());
+        int v = Integer.parseInt(st.nextToken());
+        int e = Integer.parseInt(st.nextToken());
+        int k = Integer.parseInt(br.readLine());
+        nodes = new List[v + 1];
+        for (int i = 0; i < nodes.length; i++) {
+            nodes[i] = new ArrayList<>();
         }
-        for (int i = 0; i < E; i++) {
+        for (int i = 0; i < e; i++) {
             st = new StringTokenizer(br.readLine());
-            int u = Integer.parseInt(st.nextToken());
-            int v = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
-            nodes.get(u).add(new Node(v, w));
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
+            nodes[a].add(new Node(b, cost));
         }
 
-        bfs();
-
+        dijk(k);
     }
 
-    public static void bfs() {
-        int[] dist = new int[nodes.size()];
-        Arrays.fill(dist, Integer.MAX_VALUE);
-        boolean[] visit = new boolean[nodes.size()];
-        PriorityQueue<Node> q = new PriorityQueue<>(Comparator.comparingInt(o -> o.cost));
-        q.add(new Node(K, 0));
-        dist[K] = 0;
-
+    private static void dijk(int k) {
+        int INF = Integer.MAX_VALUE;
+        PriorityQueue<Node> q = new PriorityQueue<>(Comparator.comparingInt(n -> n.cost));
+        int[] dist = new int[nodes.length];
+        boolean[] visit = new boolean[nodes.length];
+        Arrays.fill(dist, INF);
+        dist[k] = 0;
+        q.add(new Node(k, 0));
         while (!q.isEmpty()) {
-            int tmp = q.poll().last;
+            int tmp = q.poll().index;
 
-            if (visit[tmp]){
+            if (visit[tmp]) {
                 continue;
             }
-            visit[tmp]=true;
-            for (int i = 0; i < nodes.get(tmp).size(); i++) {
-                Node currentNode = nodes.get(tmp).get(i);
+            visit[tmp] = true;
+            for (Node next : nodes[tmp]) {
+                if (dist[next.index] > dist[tmp] + next.cost){
+                    dist[next.index] = dist[tmp] + next.cost;
 
-                if(dist[currentNode.last] > currentNode.cost + dist[tmp]){
-                    dist[currentNode.last] = currentNode.cost + dist[tmp];
-                    q.add(new Node(currentNode.last, dist[currentNode.last]));
+                    q.add(new Node(next.index, dist[next.index]));
                 }
-
             }
         }
 
         StringBuilder sb = new StringBuilder();
-        for (int i = 1; i < nodes.size(); i++) {
-            if (dist[i] == Integer.MAX_VALUE){
-                sb.append("INF\n");
-            }else {
-                sb.append(dist[i]).append("\n");
+        for (int i = 1; i < dist.length; i++) {
+            if (dist[i] == INF){
+                sb.append("INF");
+            } else{
+                sb.append(dist[i]);
             }
+            sb.append("\n");
         }
         System.out.println(sb);
     }
