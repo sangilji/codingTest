@@ -1,31 +1,39 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-	private static long result = 0;
+    static int result = 0;
 
-	public static void main(String[] args) {
-		Scanner s = new Scanner(System.in);
-		int n = s.nextInt();
-		int r = s.nextInt();
-		int c = s.nextInt();
-		find((int)Math.pow(2, n), r, c);
-		System.out.println(result);
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int r = Integer.parseInt(st.nextToken());
+        int c = Integer.parseInt(st.nextToken());
+        find((int) Math.pow(2, n), r, c);
 
-	private static void find(long size, long r, long c) {
-		if (size == 1) {
-			return;
-		} else if (size / 2 > r && size / 2 > c) {
-			find(size / 2, r, c);
-		} else if (size / 2 <= r && size / 2 > c) {
-			result += size * size / 2;
-			find(size / 2, r - size / 2, c);
-		} else if (size / 2 > r && size / 2 <= c) {
-			result += size * size / 4;
-			find(size / 2, r, c - size / 2);
-		} else {
-			result += size * size * 3 / 4;
-			find(size / 2, r - size / 2, c - size / 2);
-		}
-	}
+        System.out.println(result);
+    }
+
+    private static void find(int n, int x, int y) {
+        if (n == 1) {
+            return;
+        }
+
+        int nextSize = n / 2;
+        if (nextSize > x && nextSize > y) {
+            find(nextSize, x, y);
+        } else if (nextSize <= x && nextSize > y) {
+            result += nextSize * nextSize * 2;
+            find(nextSize, x - nextSize, y);
+        } else if (nextSize > x && nextSize <= y) {
+            result += nextSize * nextSize;
+            find(nextSize, x, y - nextSize);
+        } else {
+            result += nextSize * nextSize * 3;
+            find(nextSize, x - nextSize, y - nextSize);
+        }
+    }
 }

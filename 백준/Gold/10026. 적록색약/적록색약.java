@@ -1,75 +1,74 @@
-
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 
 public class Main {
-	static boolean[][] visit;
-	static int[] dx = {1, -1, 0, 0};
-	static int[] dy = {0, 0, 1, -1};
+    static char[][] map;
+    static int n;
+    static int[] dx = {0, 1, 0, -1};
+    static int[] dy = {1, 0, -1, 0};
 
-	public static void main(String[] args) {
-		Scanner s = new Scanner(System.in);
-		int N = s.nextInt();
-		String[][] picture = new String[N][N];
-		visit = new boolean[N][N];
-		for (int i = 0; i < picture.length; i++) {
-			picture[i] = s.next().split("");
-		}
+    static boolean[][] visit;
 
-		int[] count = new int[2];
-		for (int i = 0; i < picture.length; i++) {
-			for (int j = 0; j < picture[i].length; j++) {
-				if (visit[i][j] == false) {
-					visit[i][j] = true;
-					bfs(picture, i, j);
-					count[0]++;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        n = Integer.parseInt(br.readLine());
+        map = new char[n][];
+        for (int i = 0; i < n; i++) {
+            map[i] = br.readLine().toCharArray();
+        }
+        visit = new boolean[n][n];
+        int count = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (!visit[i][j]) {
+                    bfs(i, j);
+                    count++;
+                }
+            }
+        }
+        System.out.print(count +" ");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (map[i][j] == 'R') {
+                    map[i][j] = 'G';
 
-				}
+                }
+            }
+        }
+        visit = new boolean[n][n];
+        count = 0;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (!visit[i][j]) {
+                    bfs(i, j);
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
+    }
 
-			}
-		}
-		visit = new boolean[N][N];
+    private static void bfs(int x, int y) {
+        Queue<int[]> q = new ArrayDeque<>();
 
-		for (int i = 0; i < picture.length; i++) {
-			for (int j = 0; j < picture[i].length; j++) {
-				if (picture[i][j].equals("G")) {
-					picture[i][j] = "R";
-				}
+        q.add(new int[]{x, y});
+        visit[x][y] = true;
+        char color = map[x][y];
+        while (!q.isEmpty()) {
+            int[] tmp = q.poll();
+            for (int i = 0; i < 4; i++) {
+                int tmpX = dx[i] + tmp[0];
+                int tmpY = dy[i] + tmp[1];
+                if (tmpX < 0 || tmpX >= n || tmpY < 0 || tmpY >= n
+                        || map[tmpX][tmpY] != color || visit[tmpX][tmpY]) {
+                    continue;
+                }
+                visit[tmpX][tmpY] = true;
+                q.add(new int[]{tmpX, tmpY});
+            }
+        }
 
-			}
-		}
-
-		for (int i = 0; i < picture.length; i++) {
-			for (int j = 0; j < picture[i].length; j++) {
-				if (visit[i][j] == false) {
-					visit[i][j] = true;
-					bfs(picture, i, j);
-					count[1]++;
-				}
-
-			}
-		}
-		System.out.println(count[0] + " " + count[1]);
-	}
-
-	private static void bfs(String[][] picture, int x, int y) {
-		Queue<int[]> q = new LinkedList<>();
-		q.add(new int[] {x, y});
-		String color = picture[x][y];
-		while (!q.isEmpty()) {
-			int[] tmp = q.poll();
-			for (int i = 0; i < 4; i++) {
-				int tmpX = dx[i] + tmp[0];
-				int tmpY = dy[i] + tmp[1];
-				if (tmpX < 0 || tmpX >= picture.length || tmpY < 0 || tmpY >= picture.length
-					|| !picture[tmpX][tmpY].equals(color) || visit[tmpX][tmpY]) {
-					continue;
-				}
-				visit[tmpX][tmpY] = true;
-				q.add(new int[] {tmpX, tmpY});
-			}
-		}
-
-	}
+    }
 }

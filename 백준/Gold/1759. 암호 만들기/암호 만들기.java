@@ -1,58 +1,55 @@
-import java.util.ArrayList;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.StringTokenizer;
+import java.util.stream.Stream;
 
 public class Main {
-	static boolean[] visit;
-	static String[] alphabet;
-	static int L;
-	static int C;
-	static List<String> keys = new ArrayList<>();
+    static int l;
+    static int c;
+    static StringBuilder sb = new StringBuilder();
+    static String[] s;
+    static String regex = "[aeiou]";
 
-	public static void main(String[] args) {
-		Scanner s = new Scanner(System.in);
-		L = s.nextInt();
-		C = s.nextInt();
-		alphabet = new String[C];
-		visit = new boolean[C];
-		for (int i = 0; i < C; i++) {
-			alphabet[i] = s.next();
-		}
-		Arrays.sort(alphabet);
-		dfs(0, "", 0);
-		for(String i : keys){
-			System.out.println(i);
-		}
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        l = Integer.parseInt(st.nextToken());
+        c = Integer.parseInt(st.nextToken());
+        s = br.readLine().split(" ");
 
-	private static void dfs(int depth, String key, int start) {
-		if (depth == L) {
-			validateKey(key);
-			return;
-		}
-		for (int i = start; i < alphabet.length; i++) {
-			if (visit[i]) {
-				continue;
-			}
-			visit[i] = true;
-			dfs(depth+1, key + alphabet[i], i + 1);
-			visit[i] = false;
-		}
-	}
+        Arrays.sort(s);
+        dfs(0, "", 0);
+        System.out.println(sb);
+    }
 
-	private static void validateKey(String key) {
-		int a = 0;
-		int b = 0;
-		for (String s : key.split("")) {
-			if (s.matches("[aeiou]")) {
-				a++;
-			} else {
-				b++;
-			}
-		}
-		if (a >= 1 && b >= 2) {
-			keys.add(key);
-		}
-	}
+    private static void dfs(int depth, String tmp, int start) {
+        if (depth == l) {
+            if (check(tmp)) {
+                sb.append(tmp).append("\n");
+            }
+            return;
+        }
+
+        for (int i = start; i < c; i++) {
+            dfs(depth + 1, tmp + s[i], i + 1);
+        }
+    }
+
+    private static boolean check(String tmp) {
+        int a = 0;
+        int b = 0;
+        for (String s : tmp.split("")) {
+            if (s.matches(regex)) {
+                a++;
+            } else {
+                b++;
+            }
+        }
+        if (a >= 1 && b >= 2) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -1,15 +1,18 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class Main {
     static int[][] map;
     static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
-        int n = s.nextInt();
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n = Integer.parseInt(br.readLine());
         map = new int[n][n];
+        
         for (int i = 0; i < n; i++) {
-            String num = s.next();
+            String num = br.readLine();
             for (int j = 0; j < n; j++) {
                 map[i][j] = num.charAt(j) - '0';
             }
