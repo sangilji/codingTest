@@ -232,6 +232,7 @@
 |9019. DSLR|[링크](./%EB%B0%B1%EC%A4%80/Gold/9019.%E2%80%85DSLR/DSLR.java)|
 |9251. LCS|[링크](./%EB%B0%B1%EC%A4%80/Gold/9251.%E2%80%85LCS/README.md)|
 |9252. LCS 2|[링크](./%EB%B0%B1%EC%A4%80/Gold/9252.%E2%80%85LCS%E2%80%852/README.md)|
+|9466. 텀 프로젝트|[링크](./%EB%B0%B1%EC%A4%80/Gold/9466.%E2%80%85%ED%85%80%E2%80%85%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8/README.md)|
 |9663. N－Queen|[링크](./%EB%B0%B1%EC%A4%80/Gold/9663.%E2%80%85N%EF%BC%8DQueen/N%EF%BC%8DQueen.py)|
 ### 🚀 Platinum
 | 문제번호 | 링크 |
