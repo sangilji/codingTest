@@ -8,10 +8,10 @@ public class Main {
     static int n;
     static int m;
     static int[][] map;
-    static Map<Integer, Integer> numbers = new HashMap<>();
-    static boolean[][] visit;
+    static int[] numbers = new int[5000000];
+    static boolean[] visit = new boolean[500000];
     static int[] dx = {0, 1, 0, -1};
-    static int[] dy = {1,0,-1,0};
+    static int[] dy = {1, 0, -1, 0};
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -19,7 +19,6 @@ public class Main {
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
         map = new int[n][m];
-        visit = new boolean[n][m];
         int number = 2;
         for (int i = 0; i < n; i++) {
             st = new StringTokenizer(br.readLine());
@@ -30,16 +29,16 @@ public class Main {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (map[i][j] ==1){
-                    bfs(i, j,number++);
+                if (map[i][j] == 1) {
+                    bfs(i, j, number++);
                 }
             }
         }
         int result = 0;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (map[i][j]==0){
-                    result= Math.max(result,find(i, j));
+                if (map[i][j] == 0) {
+                    result = Math.max(result, find(i, j));
                 }
             }
         }
@@ -48,26 +47,36 @@ public class Main {
 
     private static int find(int x, int y) {
         int sum = 1;
-        Set<Integer> s = new HashSet<>();
+
         for (int i = 0; i < 4; i++) {
             int tx = x + dx[i];
             int ty = y + dy[i];
-            if (tx<0 || ty<0 || tx>=n || ty>=m || map[tx][ty]==0){
+            if (tx < 0 || ty < 0 || tx >= n || ty >= m || map[tx][ty] == 0) {
                 continue;
             }
-            s.add(map[tx][ty]);
+            if (!visit[map[tx][ty]]) {
+                visit[map[tx][ty]] = true;
+                sum += numbers[map[tx][ty]];
+            }
+
         }
-        for (Integer i : s) {
-            sum += numbers.get(i);
+        for (int i = 0; i < 4; i++) {
+            int tx = x + dx[i];
+            int ty = y + dy[i];
+            if (tx < 0 || ty < 0 || tx >= n || ty >= m || map[tx][ty] == 0) {
+                continue;
+            }
+            visit[map[tx][ty]] = false;
+
         }
+
         return sum;
     }
 
-    private static void bfs(int x, int y,int number) {
+    private static void bfs(int x, int y, int number) {
         Queue<int[]> q = new ArrayDeque<>();
         q.add(new int[]{x, y});
         int count = 0;
-        visit[x][y] = true;
         map[x][y] = number;
         while (!q.isEmpty()) {
             int[] tmp = q.poll();
@@ -75,14 +84,14 @@ public class Main {
             for (int i = 0; i < 4; i++) {
                 int tx = tmp[0] + dx[i];
                 int ty = tmp[1] + dy[i];
-                if (tx<0 || ty<0 || tx>=n || ty>=m || map[tx][ty]!=1){
+                if (tx < 0 || ty < 0 || tx >= n || ty >= m || map[tx][ty] != 1) {
                     continue;
                 }
                 map[tx][ty] = number;
                 q.add(new int[]{tx, ty});
             }
         }
-        numbers.put(number, count);
+        numbers[number] = count;
     }
 
 
