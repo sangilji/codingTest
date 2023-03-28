@@ -15,5 +15,6 @@ public class Main {
             dp[i][2] = Math.min(dp[i - 1][0], dp[i - 1][1]) + Integer.parseInt(st.nextToken());
         }
         System.out.println(Math.min(dp[n][0],Math.min(dp[n][1],dp[n][2])));
+
     }
 }
