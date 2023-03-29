@@ -1,34 +1,36 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-    private static final int[][] dp = new int[31][31];
-
+    static int[][] dp = new int[31][31];
     public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int t = Integer.parseInt(br.readLine());
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < t; i++) {
+            StringTokenizer st = new StringTokenizer(br.readLine());
+            int n = Integer.parseInt(st.nextToken());
+            int m = Integer.parseInt(st.nextToken());
 
-        int T = Integer.parseInt(reader.readLine());
-        
-        for (int i = 0; i < T; i++) {
-            String[] temp = reader.readLine().split(" ");
-            
-            int N = Integer.parseInt(temp[0]);
-            int M = Integer.parseInt(temp[1]);
-            
-            System.out.println(combination(M, N));
+            combi(n, m);
+           sb.append(dp[n][m]).append("\n");
         }
-        
-        reader.close();
+        System.out.println(sb);
     }
-    
-    private static int combination(int n, int r) {
-        if (dp[n][r] > 0) {
-            return dp[n][r];
-        } else if (n == r || r == 0) {
-            return dp[n][r] = 1;
-        } else {
-            return dp[n][r] = combination(n - 1, r - 1) + combination(n - 1, r);
+
+    private static int combi(int n, int m) {
+        if (dp[n][m] > 0) {
+            return dp[n][m];
         }
+        if (n == m || n == 0) {
+            return dp[n][m]= 1;
+        }
+        return dp[n][m] = combi(n, m - 1) + combi(n - 1, m - 1);
     }
 }
+//    1
+//  1 2  1
+// 1 3  3   1
+//1 4  6  4  1
