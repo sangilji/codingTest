@@ -22,9 +22,7 @@ public class Main {
                 map[i][j] = Integer.valueOf(st.nextToken());
             }
         }
-        for (int i = 0; i < n; i++) {
-            Arrays.fill(dp[i], INF);
-        }
+        
 
         System.out.println(dfs(0, 1));
 
@@ -38,10 +36,11 @@ public class Main {
             return map[current][0];
         }
         int tmp = dp[current][bit];
-        if (tmp != INF) {
+        if (tmp != 0) {
             return tmp;
         }
-
+        dp[current][bit] = INF;
+        
         for (int i = 0; i < n; i++) {
             if (map[current][i] != 0 && (bit & (1 << i)) == 0) {
                 dp[current][bit] = Math.min(dp[current][bit], map[current][i] + dfs(i, bit | (1 << i)));
