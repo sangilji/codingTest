@@ -249,6 +249,7 @@
 | 문제번호 | 링크 |
 | ----- | ----- |
 |1017. 소수 쌍|[링크](./%EB%B0%B1%EC%A4%80/Platinum/1017.%E2%80%85%EC%86%8C%EC%88%98%E2%80%85%EC%8C%8D/README.md)|
+|11003. 최솟값 찾기|[링크](./%EB%B0%B1%EC%A4%80/Platinum/11003.%E2%80%85%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EC%B0%BE%EA%B8%B0/README.md)|
 |11379. Avoider|[링크](./%EB%B0%B1%EC%A4%80/Platinum/11379.%E2%80%85Avoider/README.md)|
 |1604. 정사각형 자르기|[링크](./%EB%B0%B1%EC%A4%80/Platinum/1604.%E2%80%85%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%E2%80%85%EC%9E%90%EB%A5%B4%EA%B8%B0/%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%E2%80%85%EC%9E%90%EB%A5%B4%EA%B8%B0.java)|
 |20149. 선분 교차 3|[링크](./%EB%B0%B1%EC%A4%80/Platinum/20149.%E2%80%85%EC%84%A0%EB%B6%84%E2%80%85%EA%B5%90%EC%B0%A8%E2%80%853/README.md)|
