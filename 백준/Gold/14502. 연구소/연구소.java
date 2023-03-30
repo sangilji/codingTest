@@ -56,7 +56,7 @@ public class Main {
         for (int i = 0; i < 3; i++) {
             tmpMap[wall[i][0]][wall[i][1]] = 1;
         }
-
+        
 
         Queue<int[]> q = new ArrayDeque<>();
         for (int i = 0; i < n; i++) {
@@ -86,7 +86,7 @@ public class Main {
                 }
             }
         }
-
+        
         max = Math.max(count, max);
     }
 }
