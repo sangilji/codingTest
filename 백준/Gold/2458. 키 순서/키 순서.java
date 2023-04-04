@@ -3,81 +3,87 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
 
+
 public class Main {
-    static int n;
-    static int m;
-    static int[] count1;
-    static int[] count2;
-    static List<Integer>[] nodes1;
-    static List<Integer>[] nodes2;
-    static boolean[] visit;
+    public static int[][] x;
+    public static int n, m;
+    public static int INF = 99999;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+        //int t = Integer.parseInt(br.readLine());
+
+        //for (int i = 1; i <= t; i++) {
         StringTokenizer st = new StringTokenizer(br.readLine());
-            n = Integer.parseInt(st.nextToken());
-            m = Integer.parseInt(st.nextToken());
-            nodes1 = new List[n + 1];
-            nodes2 = new List[n + 1];
-            for (int j = 0; j < nodes1.length; j++) {
-                nodes1[j] = new ArrayList<>();
-                nodes2[j] = new ArrayList<>();
-            }
-            count1 = new int[n + 1];
-            count2 = new int[n + 1];
-            for (int j = 0; j < m; j++) {
-                st = new StringTokenizer(br.readLine());
-                int a = Integer.parseInt(st.nextToken());
-                int b = Integer.parseInt(st.nextToken());
-                nodes1[a].add(b);
-                nodes2[b].add(a);
-            }
-            int result = 0;
-            for (int j = 1; j < n + 1; j++) {
-                count1[j] = bfs1(j);
-                count2[j] = bfs2(j);
-                if (count1[j] + count2[j] + 1 == n) {
-                    result++;
-                }
-            }
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        //n = Integer.parseInt(br.readLine());
+        //m = Integer.parseInt(br.readLine());
 
-        System.out.println(result);
-    }
+        x = new int[n][n];
 
-    private static int bfs1(int current) {
-        Queue<Integer> q = new ArrayDeque<>();
-        visit = new boolean[n + 1];
-        q.add(current);
-        visit[current] = true;
-        int sum = 0;
-        while (!q.isEmpty()) {
-            int tmp = q.poll();
-            for (Integer i : nodes1[tmp]) {
-                if (!visit[i]) {
-                    visit[i] = true;
-                    q.add(i);
-                    sum++;
+        for (int j = 0; j < m; j++) {
+            //StringTokenizer st = new StringTokenizer(br.readLine());
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken()) - 1;
+            int b = Integer.parseInt(st.nextToken()) - 1;
+            x[a][b] = 1;
+        }
+
+        for (int j = 0; j < n; j++) {
+            for (int k = 0; k < n; k++) {
+                if (x[j][k] == 0) {
+                    x[j][k] = INF;
                 }
             }
         }
-        return sum;
-    }
-    private static int bfs2(int current) {
-        Queue<Integer> q = new ArrayDeque<>();
-        visit = new boolean[n + 1];
-        q.add(current);
-        visit[current] = true;
-        int sum = 0;
-        while (!q.isEmpty()) {
-            int tmp = q.poll();
-            for (Integer i : nodes2[tmp]) {
-                if (!visit[i]) {
-                    visit[i] = true;
-                    q.add(i);
-                    sum++;
+
+        for (int j = 0; j < n; j++) {
+            for (int k = 0; k < n; k++) {
+                if (j == k) {
+                    continue;
+                }
+                for (int l = 0; l < n; l++) {
+                    if (l == k || j == l) {
+                        continue;
+                    }
+                    if (x[k][l] > x[k][j] + x[j][l]) {
+                        x[k][l] = x[k][j] + x[j][l];
+                    }
+
+                }
+
+            }
+        }
+        int[] res = new int[n];
+
+        for (int j = 0; j < n; j++) {
+            for (int k = 0; k < n; k++) {
+                if (j != k) {
+                    if (x[j][k] + x[k][j] < 199998) {
+                        res[j] += 1;
+                    }
                 }
             }
         }
-        return sum;
+        int cnt = 0;
+        for (int j = 0; j < res.length; j++) {
+            //System.out.print(res[j]+" ");
+            if (res[j] == n - 1) {
+                cnt += 1;
+            }
+        }
+        System.out.println(cnt);
+        //System.out.print("#" + i + " " + cnt);
+        //System.out.println();
+            /*
+            for (int j = 0; j < n; j++) {
+                for (int k = 0; k < n; k++) {
+                    System.out.print(x[j][k]+"\t\t\t");
+                }
+                System.out.println();
+            }*/
     }
+    //}
+
 }
