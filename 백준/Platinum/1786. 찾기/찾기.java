@@ -38,11 +38,12 @@ public class Main {
                 }
             }
         }
-
-        System.out.println(cnt);
+        StringBuilder sb = new StringBuilder();
+        sb.append(cnt).append("\n");
 
         for (int i = 0; i < list.size(); i++) {
-            System.out.print((list.get(i)+1) +" ");
+            sb.append(list.get(i)+1).append(" ");
         }
+        System.out.println(sb);
     }
 }
