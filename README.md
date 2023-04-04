@@ -12,6 +12,7 @@
 | ----- | ----- |
 |1861. 정사각형 방|[링크](./SWEA/D4/1861.%E2%80%85%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%E2%80%85%EB%B0%A9/%EC%A0%95%EC%82%AC%EA%B0%81%ED%98%95%E2%80%85%EB%B0%A9.java)|
 |3289. 서로소 집합|[링크](./SWEA/D4/3289.%E2%80%85%EC%84%9C%EB%A1%9C%EC%86%8C%E2%80%85%EC%A7%91%ED%95%A9/README.md)|
+|5643. ［Professional］ 키 순서|[링크](./SWEA/D4/5643.%E2%80%85%EF%BC%BBProfessional%EF%BC%BD%E2%80%85%ED%82%A4%E2%80%85%EC%88%9C%EC%84%9C/%EF%BC%BBProfessional%EF%BC%BD%E2%80%85%ED%82%A4%E2%80%85%EC%88%9C%EC%84%9C.java)|
 ### 🚀 D5
 | 문제번호 | 링크 |
 | ----- | ----- |
