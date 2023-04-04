@@ -28,7 +28,7 @@ public class Main {
         }
 
         for (int i = 1; i < n + 1; i++) {
-            counts[i] = bfs(i) ;
+            counts[i] = bfs(i);
 
         }
 //        System.out.println(Arrays.toString(counts));
