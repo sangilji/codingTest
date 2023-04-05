@@ -27,11 +27,11 @@ public class Main {
                 count++;
             }
         }
-        if (visit[c] > 0) {
-            result = count;
-        } else {
-            result = count + 1;
+        visit[c]++;
+        if (visit[c] == 1) {
+            count++;
         }
+        result = count;
         for (int i = k; i < arr.length; i++) {
             int first = arr[i - k];
             int last = arr[i];
@@ -42,11 +42,7 @@ public class Main {
             visit[last]++;
             if (visit[last] == 1) {
                 count++;
-            }
-            if (visit[c] > 0) {
-                result = Math.max(count, result);
-            } else {
-                result = Math.max(count + 1, result);
+                result = Math.max(result, count);
             }
         }
         System.out.println(result);
