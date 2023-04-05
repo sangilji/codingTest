@@ -1,20 +1,16 @@
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
 
 public class Main {
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int n = Integer.parseInt(st.nextToken());
-        int d = Integer.parseInt(st.nextToken());
-        int k = Integer.parseInt(st.nextToken());
-        int c = Integer.parseInt(st.nextToken());
+
+        int n = read();
+        int d = read();
+        int k = read();
+        int c = read();
         int[] visit = new int[d + 1];
         int[] arr = new int[n + k - 1];
         for (int i = 0; i < n; i++) {
-            arr[i] = Integer.parseInt(br.readLine());
+            arr[i] = read();
         }
         for (int i = n; i < n + k - 1; i++) {
             arr[i] = arr[i - n];
@@ -46,5 +42,15 @@ public class Main {
             }
         }
         System.out.println(result);
+    }
+
+    static int read() throws IOException {
+        int c, n = System.in.read() & 15;
+        while ((c = System.in.read()) > 32)
+            n = (n << 3) + (n << 1) + (c & 15);
+        // 내가 추가.
+        if (c == 13)
+            System.in.read(); // 윈도우때문에 -> 백준이 리눅스 기반으로 알고있음. 이거 필요없음.
+        return n;
     }
 }
