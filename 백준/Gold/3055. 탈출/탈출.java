@@ -1,8 +1,5 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.ArrayDeque;
-import java.util.Arrays;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
@@ -15,6 +12,7 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         StringTokenizer st = new StringTokenizer(br.readLine());
         r = Integer.parseInt(st.nextToken());
         c = Integer.parseInt(st.nextToken());
@@ -25,15 +23,23 @@ public class Main {
         for (int i = 0; i < r; i++) {
             for (int j = 0; j < c; j++) {
                 if (map[i][j] == 'S') {
-                    bfs(i, j);
+                    int tmp = bfs(i, j);
+                    if (tmp == -2) {
+                        bw.write("KAKTUS");
+                        bw.flush();
+                    }else {
+                        System.out.println(tmp);
+                    }
+                    return;
                 }
             }
         }
     }
 
-    private static void bfs(int x, int y) {
+    private static int bfs(int x, int y) {
         Queue<int[]> water = new ArrayDeque<>();
         Queue<int[]> current = new ArrayDeque<>();
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
         int[][] visit = new int[r][c];
         current.add(new int[]{x, y});
         visit[x][y] = 1;
@@ -52,8 +58,7 @@ public class Main {
             for (int j = 0; j < t; j++) {
                 int[] tmp = current.poll();
                 if (map[tmp[0]][tmp[1]] == 'D') {
-                    System.out.println(count);
-                    return;
+                    return count;
                 }
                 for (int i = 0; i < 4; i++) {
                     int tx = tmp[0] + dx[i];
@@ -79,7 +84,7 @@ public class Main {
                 }
             }
         }
-        System.out.println("KAKTUS");
+        return -2;
 
     }
 
