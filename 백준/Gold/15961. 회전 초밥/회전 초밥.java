@@ -1,7 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -20,7 +19,7 @@ public class Main {
         for (int i = n; i < n + k - 1; i++) {
             arr[i] = arr[i - n];
         }
-        int result = 0;
+        int result;
         int count = 0;
         for (int i = 0; i < k; i++) {
             visit[arr[i]]++;
@@ -37,7 +36,7 @@ public class Main {
             int first = arr[i - k];
             int last = arr[i];
             visit[first]--;
-            if (visit[first]==0){
+            if (visit[first] == 0) {
                 count--;
             }
             visit[last]++;
@@ -45,9 +44,9 @@ public class Main {
                 count++;
             }
             if (visit[c] > 0) {
-                result = Math.max(count,result);
+                result = Math.max(count, result);
             } else {
-                result = Math.max(count + 1,result);
+                result = Math.max(count + 1, result);
             }
         }
         System.out.println(result);
