@@ -7,17 +7,16 @@ public class Main {
     static int n;
     static int m;
     static List<Integer>[] nodes;
-    static List<Integer>[] tree;
+    static int[] tree;
     static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
         nodes = new List[n + 1];
-        tree = new List[n + 1];
+        tree = new int[n + 1];
         for (int i = 0; i < n + 1; i++) {
             nodes[i] = new ArrayList<>();
-            tree[i] = new ArrayList<>();
         }
         for (int i = 0; i < n - 1; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
@@ -56,24 +55,22 @@ public class Main {
             if (tmp == 1) {
                 continue;
             }
-            q.add(tree[tmp].get(0));
+            q.add(tree[tmp]);
         }
     }
 
     private static void makeTree(int root) {
         Queue<Integer> q = new ArrayDeque<>();
-        boolean[] visit = new boolean[n + 1];
-        visit[root] = true;
+        tree[root] = -1;
         q.add(root);
         while (!q.isEmpty()) {
             int tmp = q.poll();
 
             for (Integer i : nodes[tmp]) {
-                if (visit[i]) {
+                if (tree[i] != 0) {
                     continue;
                 }
-                visit[i] = true;
-                tree[i].add(tmp);
+                tree[i] = tmp;
                 q.add(i);
             }
         }
