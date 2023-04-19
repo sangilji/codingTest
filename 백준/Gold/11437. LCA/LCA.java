@@ -6,15 +6,22 @@ import java.util.*;
 public class Main {
     static int n;
     static int m;
+    static int k;
     static List<Integer>[] nodes;
-    static int[] tree;
+    static int[] depth;
+    static int[][] parent;
     static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         n = Integer.parseInt(br.readLine());
         nodes = new List[n + 1];
-        tree = new int[n + 1];
+        depth = new int[n + 1];
+        k = 0;
+        for (int i = 1; i <= n; i *= 2) {
+            k++;
+        }
+        parent = new int[k][n + 1];
         for (int i = 0; i < n + 1; i++) {
             nodes[i] = new ArrayList<>();
         }
@@ -25,7 +32,8 @@ public class Main {
             nodes[a].add(b);
             nodes[b].add(a);
         }
-        makeTree(1);
+        makeDepth(1);
+        makeParent();
         m = Integer.parseInt(br.readLine());
         for (int i = 0; i < m; i++) {
             StringTokenizer st = new StringTokenizer(br.readLine());
@@ -36,42 +44,58 @@ public class Main {
         System.out.println(sb);
     }
 
+    private static void makeParent() {
+        for (int i = 1; i < k; i++) {
+            for (int j = 1; j <= n; j++) {
+                parent[i][j] = parent[i - 1][parent[i - 1][j]];
+            }
+        }
+    }
+
     private static void find(int a, int b) {
-        Queue<Integer> q = new ArrayDeque<>();
-        boolean[] visit = new boolean[n + 1];
+        if (depth[a] < depth[b]) {
+            int tmp = a;
+            a = b;
+            b = tmp;
+        }
+
+        for (int i = k - 1; i >= 0; i--) {
+            if (Math.pow(2, i) <= depth[a] - depth[b]) {
+                a = parent[i][a];
+            }
+        }
+
         if (a == b) {
             sb.append(a).append("\n");
             return;
         }
-        q.add(a);
-        q.add(b);
-        while (!q.isEmpty()) {
-            int tmp = q.poll();
-            if (visit[tmp]) {
-                sb.append(tmp).append("\n");
-                return;
+
+        for (int i = k - 1; i >= 0; i--) {
+            if (parent[i][a] != parent[i][b]) {
+                a = parent[i][a];
+                b = parent[i][b];
             }
-            visit[tmp] = true;
-            if (tmp == 1) {
-                continue;
-            }
-            q.add(tree[tmp]);
         }
+        sb.append(parent[0][a]).append("\n");
     }
 
-    private static void makeTree(int root) {
+    private static void makeDepth(int root) {
         Queue<Integer> q = new ArrayDeque<>();
-        tree[root] = -1;
+        depth[root] = 1;
         q.add(root);
-        while (!q.isEmpty()) {
-            int tmp = q.poll();
 
-            for (Integer i : nodes[tmp]) {
-                if (tree[i] != 0) {
-                    continue;
+        while (!q.isEmpty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                int tmp = q.poll();
+                for (Integer j : nodes[tmp]) {
+                    if (depth[j] != 0) {
+                        continue;
+                    }
+                    parent[0][j] = tmp;
+                    depth[j] = depth[tmp] + 1;
+                    q.add(j);
                 }
-                tree[i] = tmp;
-                q.add(i);
             }
         }
     }
