@@ -17,35 +17,36 @@ public class Main {
 				if (!num.equals(""))
 					deque.add(Integer.valueOf(num));
 
-			System.out.println(ac(deque, p));
-		}
-	}
+			boolean reverse = false;
+            boolean b= false;
+			for (char command : p.toCharArray()) {
+				if (command == 'R')
+					reverse = !reverse;
+				else {
+					if (deque.size() == 0) {
+						System.out.println("error");
+                        b= true;
+						break;
+					}
 
-	static String ac(Deque<Integer> deque, String commands) {
-		boolean reverse = false;
-
-		for (char command : commands.toCharArray()) {
-			if (command == 'R')
-				reverse = !reverse;
-			else {
-				if (deque.size() == 0)
-					return "error";
-
-				if (reverse)
-					deque.removeLast();
-				else
-					deque.removeFirst();
+					if (reverse)
+						deque.removeLast();
+					else
+						deque.removeFirst();
+				}
 			}
+			if (b) {
+				continue;
+			}
+			StringBuilder sb = new StringBuilder("[");
+			while (!deque.isEmpty()) {
+				sb.append(reverse ? deque.removeLast() : deque.removeFirst());
+				if (deque.size() != 0)
+					sb.append(',');
+			}
+			sb.append(']');
+			System.out.println(sb.toString());
 		}
-
-		StringBuilder sb = new StringBuilder("[");
-		while (!deque.isEmpty()) {
-			sb.append(reverse ? deque.removeLast() : deque.removeFirst());
-			if (deque.size() != 0)
-				sb.append(',');
-		}
-		sb.append(']');
-
-		return sb.toString();
 	}
+	
 }
