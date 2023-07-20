@@ -1,44 +1,49 @@
-
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.Arrays;
-import java.util.Scanner;
+import java.util.StringTokenizer;
 
 public class Main {
-    static int[] card;
-    static int n;
-    public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
-        n = s.nextInt();
-        card = new int[n];
+	static int[] card;
+	static int n;
+	static StringBuilder sb = new StringBuilder();
 
-        for(int i =0; i<n;i++){
-            card[i]=s.nextInt();
-        }
-        Arrays.sort(card);
-        int a =s.nextInt();
-        for(int i =0;i<a;i++){
-            int num=s.nextInt();
-            search(num);
-        }
-    }
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		n = Integer.parseInt(br.readLine());
+		card = new int[n];
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < n; i++) {
+			card[i] = Integer.parseInt(st.nextToken());
+		}
+		Arrays.sort(card);
+		int a = Integer.parseInt(br.readLine());
+		st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < a; i++) {
+			int num = Integer.parseInt(st.nextToken());
+			search(num);
+		}
+		System.out.println(sb);
+	}
 
-    private static void search(int num) {
-        int left=0;
-        int right=n-1;
-        while(left<=right){
-            int mid = (left+right)/2;
-            int m = card[mid];
+	private static void search(int num) {
+		int left = 0;
+		int right = n - 1;
+		while (left <= right) {
+			int mid = (left + right) / 2;
+			int m = card[mid];
 
-            if(num < m){
-                right = mid -1;
-            } else if(num > m){
-                left = mid+1;
-            } else {
-                System.out.print("1 ");
-                return;
-            }
-        }
-        System.out.print("0 ");
-        return;
-    }
+			if (num < m) {
+				right = mid - 1;
+			} else if (num > m) {
+				left = mid + 1;
+			} else {
+				sb.append("1 ");
+				return;
+			}
+		}
+		sb.append("0 ");
+		return;
+	}
 }
