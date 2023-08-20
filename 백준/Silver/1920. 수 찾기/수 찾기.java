@@ -1,26 +1,31 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.HashSet;
-import java.util.Scanner;
 import java.util.Set;
+import java.util.StringTokenizer;
 
 public class Main {
-	public static void main(String[] args) {
-		Set<Integer> arr = new HashSet<>();
-		Scanner s = new Scanner(System.in);
-		int n = s.nextInt();
+
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		int n = Integer.parseInt(br.readLine());
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		Set<Integer> s = new HashSet<>();
 		for (int i = 0; i < n; i++) {
-			int tmp = s.nextInt();
-			arr.add(tmp);
+			s.add(Integer.parseInt(st.nextToken()));
 		}
-		int m = s.nextInt();
-		for (int i = 0; i < m; i++) {
-			int tmp = s.nextInt();
-			int length = arr.size();
-			arr.add(tmp);
-			if (length == arr.size()) {
-				System.out.println(1);
+		StringBuilder sb = new StringBuilder();
+		int a = Integer.parseInt(br.readLine());
+		st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < a; i++) {
+			if (s.contains(Integer.parseInt(st.nextToken()))) {
+				sb.append(1).append("\n");
 			} else {
-				System.out.println(0);
+				sb.append(0).append("\n");
 			}
 		}
+		System.out.println(sb);
 	}
+
 }
