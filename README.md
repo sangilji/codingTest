@@ -368,6 +368,7 @@
 | 문제번호 | 링크 |
 | ----- | ----- |
 |1017. 소수 쌍|[링크](./%EB%B0%B1%EC%A4%80/Platinum/1017.%E2%80%85%EC%86%8C%EC%88%98%E2%80%85%EC%8C%8D/README.md)|
+|1090. 체커|[링크](./%EB%B0%B1%EC%A4%80/Platinum/1090.%E2%80%85%EC%B2%B4%EC%BB%A4/%EC%B2%B4%EC%BB%A4.java)|
 |11003. 최솟값 찾기|[링크](./%EB%B0%B1%EC%A4%80/Platinum/11003.%E2%80%85%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EC%B0%BE%EA%B8%B0/%EC%B5%9C%EC%86%9F%EA%B0%92%E2%80%85%EC%B0%BE%EA%B8%B0.java)|
 |11379. Avoider|[링크](./%EB%B0%B1%EC%A4%80/Platinum/11379.%E2%80%85Avoider/README.md)|
 |11402. 이항 계수 4|[링크](./%EB%B0%B1%EC%A4%80/Platinum/11402.%E2%80%85%EC%9D%B4%ED%95%AD%E2%80%85%EA%B3%84%EC%88%98%E2%80%854/README.md)|
