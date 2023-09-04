@@ -1,7 +1,5 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
-
+import java.util.*;
+import java.io.*;
 public class Main {
 	private static int n;
 	private static int m;
@@ -9,14 +7,15 @@ public class Main {
 	private static int[] dx = {1, -1, 0, 0};
 	private static int[] dy = {0, 0, 1, -1};
 
-	public static void main(String[] args) {
-		Scanner s = new Scanner(System.in);
-		n = s.nextInt();
-		m = s.nextInt();
+	public static void main(String[] args) throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
 		map = new int[n][m];
 
 		for (int i = 0; i < n; i++) {
-			String[] input = s.next().split("");
+			String[] input = br.readLine().split("");
 			for (int j = 0; j < m; j++) {
 				map[i][j] = Integer.parseInt(input[j]);
 			}
