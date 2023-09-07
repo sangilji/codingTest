@@ -1,56 +1,52 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.StringTokenizer;
-
 
 public class Main {
 
+	static int MOD = 1_000_000;
+	static int n;
+	static int m;
+	static List<int[]> list = new ArrayList<>();
+	static List<int[]> list2 = new ArrayList<>();
+	static Map<Integer, Integer> map = new HashMap<>();
+	static int[] arr;
+	static int[] arr2;
+	static long[] tree;
+	static long[] lazy;
+	static int SIZE = 1_000_000;
 
-    public static void main(String[] args) throws IOException {
-        //코드를 작성하세요.
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int h = Integer.parseInt(st.nextToken());
-        int w = Integer.parseInt(st.nextToken());
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+		arr = new int[m+2];
+		st = new StringTokenizer(br.readLine());
+		for (int i = 1; i <= m; i++) {
+			arr[i] = Integer.parseInt(st.nextToken());
+		}
+		int[] prefix_max = new int[m + 2];
+		int[] suffix_max = new int[m + 2];
+		for (int i = 1; i <= m; i++) {
+			prefix_max[i] = Math.max(arr[i], prefix_max[i-1]);
+		}
+		for (int i = m; i >=1 ; i--) {
+			suffix_max[i] = Math.max(arr[i], suffix_max[i + 1]);
+		}
 
-        st = new StringTokenizer(br.readLine());
-
-        int[] blocks = new int[w + 1];
-        for (int i = 1; i <= w; i++) {
-            blocks[i] = Integer.parseInt(st.nextToken());
-        }
-        int[][] pos = new int[h + 1][2];
-        int[] blockCount = new int[h + 1];
-
-        for (int i = 1; i <= w; i++) {
-            blockCount[blocks[i]]++;
-            for (int j = blocks[i]; j > 0; j--) {
-                if (pos[j][0] == 0) {
-                    pos[j][0] = i;
-                } else {
-                    pos[j][1] = i;
-                }
-
-            }
-
-        }
-
-        for (int i = h - 1; i > 0; i--) {
-            blockCount[i] += blockCount[i + 1];
-
-        }
-        int sum = 0;
-
-        for (int i = 1; i < h + 1; i++) {
-            if (blockCount[i] == 0 || blockCount[i] == 1) {
-                continue;
-            }
-            sum += Math.max(0, pos[i][1] - pos[i][0]) + 1 - blockCount[i];
-
-        }
-        System.out.println(sum);
-    }
-
+		int result = 0;
+		for (int i = 1; i <= m; i++) {
+			int min = Math.min(prefix_max[i], suffix_max[i]);
+			result += min - arr[i];
+		}
+		System.out.println(result);
+	}
 
 }
