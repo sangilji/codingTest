@@ -1,43 +1,56 @@
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.stream.Collectors;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Main {
-    static int N;
-    static int R;
-    static int totalCount;
-    static int[] result;
-    static boolean[] visit;
-    static StringBuilder sb = new StringBuilder();
 
-    public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
-        N = s.nextInt();
-        R = s.nextInt();
-        result = new int[R];
-        visit = new boolean[N];
+	static int MOD = 1000000000;
+	static int n;
+	static int r;
+	static int m;
 
-        perm(0);
-        System.out.println(sb);
-    }
+	static int[] arr;
+	static List<Integer>[] graph;
+	static List<Integer>[] list;
+	static int[] visit;
+	static int[] in;
+	static int[] out;
+	static int[] tree;
 
-    private static void perm(int depth) {
-        if (depth == R) {
-            sb.append(Arrays.stream(result)
-                            .boxed()
-                            .map(String::valueOf)
-                            .collect(Collectors.joining(" ")))
-                    .append("\n");
-            totalCount++;
-            return;
-        }
-        for (int i = 0; i < N; i++) {
-            if (!visit[i]) {
-                visit[i] = true;
-                result[depth] = i + 1;
-                perm(depth + 1);
-                visit[i] = false;
-            }
-        }
-    }
+	static int count = 0;
+	static long[][] dp;
+	static StringBuilder sb = new StringBuilder();
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+		arr = new int[m];
+		visit = new int[n+1];
+		recur(0);
+		System.out.println(sb);
+	}
+
+	private static void recur(int depth) {
+		if (depth == m) {
+			for (int i = 0; i < m; i++) {
+				sb.append(arr[i]).append(" ");
+			}
+			sb.append("\n");
+			return;
+		}
+		for (int i = 1; i <= n; i++) {
+			if (visit[i] == 1) {
+				continue;
+			}
+			visit[i] = 1;
+			arr[depth] = i;
+			recur(depth + 1);
+			visit[i] = 0;
+		}
+	}
+
 }
