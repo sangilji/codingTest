@@ -2,54 +2,92 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Arrays;
+import java.util.List;
 import java.util.StringTokenizer;
-import java.util.stream.Stream;
 
 public class Main {
-    static int l;
-    static int c;
-    static StringBuilder sb = new StringBuilder();
-    static String[] s;
-    static String regex = "[aeiou]";
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        l = Integer.parseInt(st.nextToken());
-        c = Integer.parseInt(st.nextToken());
-        s = br.readLine().split(" ");
+	static int MOD = 1000000000;
+	static int n;
+	static int r;
+	static int m;
 
-        Arrays.sort(s);
-        dfs(0, "", 0);
-        System.out.println(sb);
-    }
+	static String[] arr;
+	static int[] arr2;
+	static List<Integer>[] graph;
+	static List<Integer>[] list;
+	static int[] visit;
 
-    private static void dfs(int depth, String tmp, int start) {
-        if (depth == l) {
-            if (check(tmp)) {
-                sb.append(tmp).append("\n");
-            }
-            return;
-        }
+	static int[] in;
+	static int[] out;
+	static int[] tree;
 
-        for (int i = start; i < c; i++) {
-            dfs(depth + 1, tmp + s[i], i + 1);
-        }
-    }
+	static int count = 0;
+	static long[][] dp;
+	static long max = Long.MIN_VALUE;
+	static long min = Long.MAX_VALUE;
+	static int mp;
+	static int mf;
+	static int ms;
+	static int mv;
+	static StringBuilder sb = new StringBuilder();
 
-    private static boolean check(String tmp) {
-        int a = 0;
-        int b = 0;
-        for (String s : tmp.split("")) {
-            if (s.matches(regex)) {
-                a++;
-            } else {
-                b++;
-            }
-        }
-        if (a >= 1 && b >= 2) {
-            return true;
-        }
-        return false;
-    }
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
+		st = new StringTokenizer(br.readLine());
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+
+		st = new StringTokenizer(br.readLine());
+		arr = new String[m];
+		visit = new int[m];
+		for (int i = 0; i < m; i++) {
+			arr[i] = st.nextToken();
+		}
+		Arrays.sort(arr);
+		recur(0, 0);
+		System.out.println(sb);
+
+
+	}
+	static String result = "";
+
+	private static void recur(int depth, int count) {
+		if (depth == m) {
+			if (count == n) {
+				if (check()) {
+					for (int i = 0; i < m; i++) {
+						if (visit[i] == 1) {
+							sb.append(arr[i]);
+						}
+					}
+					sb.append("\n");
+				}
+			}
+			return;
+		}
+		visit[depth] = 1;
+		recur(depth + 1, count + 1);
+		visit[depth] =0;
+		recur(depth + 1, count);
+	}
+
+	static String[] alpha = {"a", "e", "i", "o", "u"};
+	private static boolean check() {
+		int cnt = 0;
+		for (int i = 0; i < m; i++) {
+			if (visit[i] == 0) {
+				continue;
+			}
+			for (int j = 0; j < 5; j++) {
+				if (arr[i].equals(alpha[j])) {
+					cnt++;
+					break;
+				}
+			}
+		}
+		return cnt >= 1 && n - cnt >= 2;
+	}
+
 }
