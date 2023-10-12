@@ -1,97 +1,87 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
-import java.util.stream.Collectors;
 
 public class Main {
+
+	static int MOD = 1000000000;
 	static int n;
-	static String[] arr;
-	static int[] num;
-	
+	static int r;
+	static int m;
+
+	static int[] arr;
+	static int[] arr2;
+	static List<Integer>[] graph;
+	static List<Integer>[] list;
+	static int[] visit;
+	static int[] in;
+	static int[] out;
+	static int[] tree;
+
+	static int count = 0;
+	static long[][] dp;
+	static long max = Long.MIN_VALUE;
+	static long min = Long.MAX_VALUE;
+	static StringBuilder sb = new StringBuilder();
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st;
 		n = Integer.parseInt(br.readLine());
-		arr = new String[n + 1];
-		num = new int[n + 1];
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		for (int i = 1; i <= n; i++) {
-			arr[i] = st.nextToken();
+
+		arr = new int[n];
+		visit = new int[10];
+
+		st = new StringTokenizer(br.readLine());
+		for (int i = 0; i < n; i++) {
+			arr[i] = Integer.parseInt(st.nextToken().equals("<") ? "0" : "1");
 		}
-		dfs(0);
-		System.out.println(last);
-		System.out.println(first);
+		for (int i = 0; i <= 9; i++) {
+			visit[i] = 1;
+			recur(0, i);
+			visit[i] = 0;
+		}
+
+		if (max < Math.pow(10, n)) {
+			System.out.println("0"+max);
+		}else{
+			System.out.println(max);
+		}
+		if (min < Math.pow(10, n )) {
+			System.out.println("0"+min);
+		}else{
+
+			System.out.println(min);
+		}
 	}
 
-	static boolean[] visit = new boolean[10];
-	static int count = 0;
-	static String first="";
-	static String last="";
-
-	private static void dfs(int depth) {
-		if (depth == n + 1) {
-			if (count == 0) {
-				first = Arrays.stream(num).mapToObj(String::valueOf).collect(Collectors.joining());
-				count++;
-			}else{
-				last =  Arrays.stream(num).mapToObj(String::valueOf).collect(Collectors.joining());
-			}
+	private static void recur(int depth, long current) {
+		if (depth == n) {
+			max = Math.max(max, current);
+			min = Math.min(min, current);
 			return;
 		}
-
-		if (depth == 0) {
-			for (int i = 0; i <= 9; i++) {
-				num[depth] = i;
-				visit[i] = true;
-				dfs(depth + 1);
-				visit[i] = false;
+		if (arr[depth] == 0) {
+			for (int i = (int)((current % 10) + 1); i < 10; i++) {
+				if (visit[i] == 1) {
+					continue;
+				}
+				visit[i] = 1;
+				recur(depth + 1, current * 10 + i);
+				visit[i] = 0;
 			}
 		} else {
-			if (arr[depth].equals("<")) {
-				for (int i = num[depth-1]+1; i <= 9; i++) {
-					if (visit[i]) {
-						continue;
-					}
-					num[depth] = i;
-					visit[i] = true;
-					dfs(depth + 1);
-					visit[i] = false;
+			for (int i = 0; i < current % 10; i++) {
+				if (visit[i] == 1) {
+					continue;
 				}
-			} else {
-				for (int i = 0; i < num[depth-1]; i++) {
-					if (visit[i]) {
-						continue;
-					}
-					num[depth] = i;
-					visit[i] = true;
-					dfs(depth + 1);
-					visit[i] = false;
-				}
-			}
-
-		}
-	}
-
-	//
-	private static boolean check(int depth) {
-		for (int i = 2; i <= depth; i += 2) {
-			for (int j = 1; j <= depth - i + 1; j++) {
-				boolean b = false;
-				for (int k = j; k < j + i / 2; k++) {
-					if (arr[k] != arr[k + i / 2]) {
-						b = true;
-					}
-				}
-				if (!b) {
-					return false;
-				}
+				visit[i] = 1;
+				recur(depth + 1, current * 10 + i);
+				visit[i] = 0;
 			}
 		}
-		return true;
 	}
 
 }
