@@ -1,32 +1,53 @@
-import java.util.Arrays;
-import java.util.Scanner;
-import java.util.stream.Collectors;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Main {
-    static int n;
-    static int m;
-    static int[] numbers;
 
-    public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
-        n = s.nextInt();
-        m = s.nextInt();
-        numbers = new int[m];
-        combi(0, 0);
-    }
+	static int MOD = 1000000000;
+	static int n;
+	static int r;
+	static int m;
 
-    public static void combi(int depth, int start) {
-        if (depth == m) {
-            System.out.println(Arrays.stream(numbers)
-                    .boxed()
-                    .map(String::valueOf)
-                    .collect(Collectors.joining(" ")));
-            return;
-        }
+	static int[] arr;
+	static List<Integer>[] graph;
+	static List<Integer>[] list;
+	static int[] visit;
+	static int[] in;
+	static int[] out;
+	static int[] tree;
 
-        for (int i = start; i < n; i++) {
-            numbers[depth] = i + 1;
-            combi(depth + 1, i + 1);
-        }
-    }
+	static int count = 0;
+	static long[][] dp;
+	static StringBuilder sb = new StringBuilder();
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+		StringTokenizer st = new StringTokenizer(br.readLine());
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+		arr = new int[m];
+
+		recur(0, 1);
+		System.out.println(sb);
+	}
+
+	private static void recur(int depth,int current) {
+		if (depth == m) {
+			for (int i = 0; i < m; i++) {
+				sb.append(arr[i]).append(" ");
+			}
+			sb.append("\n");
+			return;
+		}
+		for (int i = current; i <= n; i++) {
+
+			arr[depth] = i;
+			recur(depth + 1, i + 1);
+
+		}
+	}
+
 }
