@@ -17,10 +17,13 @@ public class Main {
 		StringBuilder sb = new StringBuilder();
 		// StringTokenizer st = new StringTokenizer(br.readLine());
 		n = Integer.parseInt(br.readLine());
-		// m = Integer.parseInt(st.nextToken());
-		dp = new int[n+1];
-		Arrays.fill(dp, -1);
-		System.out.println(recur(0) % 10007);
+		dp = new int[1001];
+        dp[1] = 1;
+        dp[2] = 2;
+        for (int i = 3; i <= n; i++) {
+            dp[i] = (dp[i - 1] + dp[i - 2])%10007;
+        }
+        System.out.println(dp[n] % 10007);
 
 	}
 
