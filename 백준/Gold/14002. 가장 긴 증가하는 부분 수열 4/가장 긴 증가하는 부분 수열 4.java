@@ -1,66 +1,56 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
-import java.util.stream.Collectors;
-
+import java.util.List;
+import java.util.Stack;
+import java.util.StringTokenizer;
 
 public class Main {
-    static int[] arr;
-    static int[] dp;
-    static int[] dp2;
+	static int MOD = 1_000_000_009;
+	static int n;
+	static int m;
+	static int[] dp;
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        arr = new int[n + 1];
-        dp = new int[n + 1];
-        for (int i = 1; i < n + 1; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
-        }
-        for (int i = 1; i < arr.length; i++) {
-            for (int j = i - 1; j >= 0; j--) {
-                if (arr[i] > arr[j]) {
-                    dp[i] = Math.max(dp[i], dp[j] + 1);
-                }
-            }
-        }
-        int size = Arrays.stream(dp).max().getAsInt();
-        StringBuilder sb = new StringBuilder();
-        sb.append(size).append("\n");
-        int[] answer = new int[size];
-        int index = size;
-        for (int i = n; i > 0; i--) {
-            if (dp[i] == index) {
-                index--;
-                answer[index] = arr[i];
-            }
-            if (index == 0) {
-                break;
-            }
-        }
-        for (int i = 0; i < size; i++) {
-            sb.append(answer[i]).append(" ");
-        }
-        
-        System.out.println(sb);
-    }
+	static int[] arr;
+	static int[] tree;
+	static List<Integer>[] graph;
 
-    private static int search(int size, int target) {
-        int left = 0;
-        int right = size;
-        while (left < right) {
-            int mid = (left + right) / 2;
+	static long min = Integer.MAX_VALUE;
 
-            if (dp[mid] < target) {
-                left = mid + 1;
-            } else {
-                right = mid;
-            }
-        }
-        return left;
-    }
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		StringTokenizer st;
 
+		n = Integer.parseInt(br.readLine());
+		arr = new int[n + 1];
+		st = new StringTokenizer(br.readLine());
+		for (int i = 1; i <= n; i++) {
+			arr[i] = Integer.parseInt(st.nextToken());
+		}
+		dp = new int[n + 1];
+		int max = 0;
+		for (int i = 1; i <= n; i++) {
+			for (int j = 0; j < i; j++) {
+				if (arr[i] > arr[j]) {
+					dp[i] = Math.max(dp[i], dp[j] + 1);
+					max = Math.max(max, dp[i]);
+				}
+			}
+		}
+		sb.append(max).append("\n");
+		Stack<Integer> s = new Stack<>();
+		for (int i = n; i >= 1; i--) {
+			if (dp[i] == max) {
+				s.push(arr[i]);
+				max--;
+			}
+		}
+		while (!s.isEmpty()) {
+			sb.append(s.pop()).append(" ");
+		}
+		System.out.println(sb);
+
+	}
 
 }
