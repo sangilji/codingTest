@@ -1,59 +1,69 @@
-import java.util.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
 
 public class Main {
-    static int[][] map;
-    static boolean[][] visit;
-    static int[] dx = {1, -1, 0, 0};
-    static int[] dy = {0, 0, -1, 1};
+	static int MOD = 1_000_000_009;
+	static int n;
+	static int m;
+	static int k;
+	static int[][] dp;
 
-    public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
-        int n = s.nextInt();
-        map = new int[n][n];
-        visit = new boolean[n][n];
-        for (int i = 0; i < n; i++) {
-            String m = s.next();
-            for (int j = 0; j < n; j++) {
-                map[i][j] = m.charAt(j) - '0';
-            }
-        }
-        List<Integer> arr = new ArrayList<>();
-        int count = 2;
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                if (map[i][j] == 1) {
-                    arr.add(bfs(i, j, count));
-                    count++;
-                }
-            }
-        }
-        arr.sort(Integer::compareTo);
-        System.out.println(arr.size());
-        for (int i : arr) {
-            System.out.println(i);
-        }
-    }
+	static int[][] arr;
+	static List<Integer>[] list;
+	static int[][] visit;
+	static int[] dx = {0, 1, 0, -1};
+	static int[] dy = {1, 0, -1, 0};
 
-    private static int bfs(int x, int y, int count) {
-        Queue<int[]> q = new LinkedList<>();
-        q.add(new int[]{x, y});
-        int result = 0;
-        map[x][y] = count;
+	static int count = 0;
 
-        while (!q.isEmpty()) {
-            int[] tmp = q.poll();
-            result++;
-            for (int i = 0; i < 4; i++) {
-                int tx = dx[i] + tmp[0];
-                int ty = dy[i] + tmp[1];
-                if (tx < 0 || ty < 0 || tx >= map.length || ty >= map.length || map[tx][ty] != 1) {
-                    continue;
-                }
-                map[tx][ty] = count;
-                q.add(new int[]{tx, ty});
-            }
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		StringTokenizer st;
 
-        }
-        return result;
-    }
+		n = Integer.parseInt(br.readLine());
+
+		arr = new int[n][n];
+		visit = new int[n][n];
+
+		for (int i = 0; i < n; i++) {
+			String[] tmp = br.readLine().split("");
+			for (int j = 0; j < n; j++) {
+				arr[i][j] = Integer.parseInt(tmp[j]);
+			}
+		}
+		PriorityQueue<Integer> q = new PriorityQueue<>(Integer::compareTo);
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				if (visit[i][j] == 0 && arr[i][j] == 1) {
+					q.add(dfs(i, j));
+					count++;
+				}
+			}
+		}
+		sb.append(count).append("\n");
+		while (!q.isEmpty()) {
+			sb.append(q.poll()).append("\n");
+		}
+		System.out.println(sb);
+	}
+
+	private static int dfs(int x,int y) {
+		visit[x][y] = 1;
+		int tmp = 1;
+		for (int i = 0; i < 4; i++) {
+			int tx = x + dx[i];
+			int ty = y + dy[i];
+			if (tx < 0 || ty < 0 || tx >= n || ty >= n || visit[tx][ty] == 1 || arr[tx][ty] == 0) {
+				continue;
+			}
+			tmp += dfs(tx, ty);
+		}
+		return tmp;
+	}
+
 }
