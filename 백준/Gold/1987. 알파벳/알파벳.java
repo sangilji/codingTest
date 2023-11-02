@@ -4,49 +4,48 @@ import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 public class Main {
-    private static int r;
-    private static int c;
-    private static int[] dx = {1, -1, 0, 0};
-    private static int[] dy = {0, 0, 1, -1};
-    private static boolean visit[] = new boolean[26];
-    private static int max = 0;
-    private static char[][] map;
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        r = Integer.parseInt(st.nextToken());
-        c = Integer.parseInt(st.nextToken());
-        map = new char[r][c];
-        for (int i = 0; i < r; i++) {
-            map[i] = br.readLine().toCharArray();
-        }
-        visit[map[0][0] - 'A'] =true;
-        bfs(map, new Position(0, 0), 1);
+	static int MOD = 1_000_000_009;
+	static int n;
+	static int m;
+	static int k;
 
-        System.out.println(max);
-    }
+	static char[][] arr;
+	static int[] alpha;
+	static int[] dx = {0, -1, 0, 1};
+	static int[] dy = {1, 0, -1, 0};
 
-    private static class Position {
-        int x;
-        int y;
+	static int count = 0;
 
-        public Position(int x, int y) {
-            this.x = x;
-            this.y = y;
-        }
-    }
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringBuilder sb = new StringBuilder();
+		StringTokenizer st;
+		st = new StringTokenizer(br.readLine());
+		n = Integer.parseInt(st.nextToken());
+		m = Integer.parseInt(st.nextToken());
+		arr = new char[n][];
+		alpha = new int[26];
+		for (int i = 0; i < n; i++) {
+			arr[i] = br.readLine().toCharArray();
+		}
+		System.out.println(dfs(0, 0));
+	}
 
-    private static void bfs(char[][] map, Position tmp, int depth) {
-        for (int i = 0; i < 4; i++) {
-            int x = tmp.x + dx[i];
-            int y = tmp.y + dy[i];
-            if (x < 0 || y < 0 || x >= r || y >= c || visit[map[x][y] - 'A']) {
-                continue;
-            }
-            visit[map[x][y] - 'A'] = true;
-            bfs(map, new Position(x, y), depth + 1);
-            visit[map[x][y] - 'A'] = false;
-        }
-        max =Math.max(depth,max);
-    }
+	private static int dfs(int x, int y) {
+		alpha[arr[x][y] - 'A'] = 1;
+		int count = 0;
+		for (int i = 0; i < 4; i++) {
+			int tx = x + dx[i];
+			int ty = y + dy[i];
+			if (tx < 0 || ty < 0 || tx >= n || ty >= m || alpha[arr[tx][ty] - 'A'] == 1) {
+				continue;
+			}
+			count = Math.max(count, dfs(tx, ty));
+		}
+
+		alpha[arr[x][y] - 'A'] = 0;
+		return count + 1;
+
+	}
+
 }
