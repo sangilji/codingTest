@@ -15,7 +15,6 @@ public class Main {
 	static char[][] arr;
 	static int[] visit;
 	static List<int[]> list = new ArrayList<>();
-	static List<Integer>[] graph;
 	static int[] alpha;
 	static int[] dx = {0, -1, 0, 1};
 	static int[] dy = {1, 0, -1, 0};
@@ -28,51 +27,42 @@ public class Main {
 		StringTokenizer st;
 		n = Integer.parseInt(br.readLine());
 		list.add(new int[] {0, 0});
-		graph = new List[n + 1];
 		visit = new int[n + 1];
-		for (int i = 0; i <= n; i++) {
-			graph[i] = new ArrayList<>();
-		}
 		for (int i = 0; i < n; i++) {
 			st = new StringTokenizer(br.readLine());
 			int a = Integer.parseInt(st.nextToken());
 			int b = Integer.parseInt(st.nextToken());
 			int c = Integer.parseInt(st.nextToken());
 			if (a == 1) {
-				for (int j = 1; j < list.size(); j++) {
-					if ((list.get(j)[0] < b && b < list.get(j)[1]) || (list.get(j)[0] < c
-						&& c < list.get(j)[1])) {
-						graph[list.size()].add(j);
-					}
-					if ((b < list.get(j)[0] && list.get(j)[0] < c) || (b < list.get(j)[1]
-						&& list.get(j)[1] < c)) {
-						graph[j].add(list.size());
-					}
-				}
 				list.add(new int[] {b, c});
 			} else {
 				Arrays.fill(visit, 0);
-				sb.append(dfs(b, c) ? 1 : 0).append("\n");
+				sb.append(dfs(b, c)).append("\n");
 			}
 		}
 		System.out.println(sb);
 
 	}
 
-	private static boolean dfs(int b, int c) {
-		visit[b] = 1;
+	private static int dfs(int b, int c) {
 		if (b == c) {
-			return true;
+			return 1;
 		}
-		boolean tmp = false;
-		for (int i = 0; i < graph[b].size(); i++) {
-			if (visit[graph[b].get(i)] == 1) {
+		visit[b] = 1;
+		int tmp = 0;
+		for (int i = 1; i < list.size(); i++) {
+			if (visit[i] == 1 || i == b) {
 				continue;
 			}
-			tmp |= dfs(graph[b].get(i), c);
-
+			if ((list.get(i)[0] < list.get(b)[0] && list.get(b)[0] < list.get(i)[1]) || (list.get(i)[0] < list.get(b)[1]
+				&& list.get(b)[1] < list.get(i)[1])) {
+				tmp += dfs(i, c);
+			}
 		}
-		return tmp;
+		if (tmp > 0) {
+			return 1;
+		}
+		return 0;
 	}
 
 }
