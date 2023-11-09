@@ -1,69 +1,79 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.List;
 import java.util.PriorityQueue;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 public class Main {
-
-	static long MOD = 1L << 32;
+	static int MOD = 1_000_000_009;
+	static int INF = 1_500_000_000;
 	static int n;
 	static int m;
 	static int k;
+
 	static int[][] arr;
-	static int[] dx = {0, 1, 0, -1};
+	static int[][] visit;
+	static List<Integer> list = new ArrayList<>();
+	static List<int[]>[] graph;
+	static int[] alpha;
+	static int[] dx = {0, -1, 0, 1};
 	static int[] dy = {1, 0, -1, 0};
+
+	static int count = 0;
+	static Set<Integer> s = new HashSet<>();
+	static int x;
+	static int y;
 
 	public static void main(String[] args) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		StringBuilder sb = new StringBuilder();
-		StringTokenizer st = new StringTokenizer(br.readLine());
+		StringTokenizer st;
+		st = new StringTokenizer(br.readLine());
 		m = Integer.parseInt(st.nextToken());
 		n = Integer.parseInt(st.nextToken());
-		arr = new int[n+1][m+1];
-		for (int i = 1; i <= n; i++) {
+		arr = new int[n][m];
+		for (int i = 0; i < n; i++) {
 			String[] tmp = br.readLine().split("");
-			for (int j = 1; j <= m; j++) {
-				arr[i][j] = Integer.parseInt(tmp[j-1]);
+			for (int j = 0; j < m; j++) {
+				arr[i][j] = Integer.parseInt(tmp[j]);
 			}
 		}
 		bfs();
-
 	}
+
 	private static void bfs() {
-		PriorityQueue<int[]> q = new PriorityQueue<>((o1, o2) -> {
-			if (o1[2] == o2[2]) {
-				if (o1[0] == o2[0]) {
-					return o2[1] - o1[1];
-				}
-				return o2[0] - o1[0];
-			}
-			return o1[2] - o2[2];
-		});
-		boolean[][] visit = new boolean[n + 1][m + 1];
-		q.add(new int[] {1, 1, 0});
-		visit[1][1] = true;
+		PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparingInt(o -> o[2]));
+		int[][] visit = new int[n][m];
+		for (int i = 0; i < n; i++) {
+			Arrays.fill(visit[i], INF);
+		}
+		q.add(new int[] {0, 0, 0});
+		visit[0][0] = 0;
 		while (!q.isEmpty()) {
 			int[] tmp = q.poll();
-			if (tmp[0] == n && tmp[1] == m) {
-				System.out.println(tmp[2]);
-				return;
-			}
+
 			for (int i = 0; i < 4; i++) {
-				int x = tmp[0] + dx[i];
-				int y = tmp[1] + dy[i];
-				if (x <= 0 || y <= 0 || x > n || y > m || visit[x][y]) {
+				int tx = tmp[0] + dx[i];
+				int ty = tmp[1] + dy[i];
+				if (tx < 0 || ty < 0 || tx >= n || ty >= m) {
 					continue;
 				}
-				visit[x][y]=true;
-				if (arr[x][y] == 1) {
-					q.add(new int[] {x, y, tmp[2] + 1});
-				}else{
-					q.add(new int[] {x, y, tmp[2]});
+				if (visit[tx][ty] > tmp[2] + arr[tx][ty]) {
+					visit[tx][ty] = tmp[2] + arr[tx][ty];
+					q.add(new int[] {tx, ty, tmp[2] + arr[tx][ty]});
 				}
 			}
 		}
 
+		System.out.println(visit[n - 1][m - 1]);
 	}
+
+	static int result = 0;
 
 }
