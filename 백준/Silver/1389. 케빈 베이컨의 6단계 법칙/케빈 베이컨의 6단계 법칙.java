@@ -1,63 +1,83 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner s = new Scanner(System.in);
-		int n = s.nextInt();
-		int m = s.nextInt();
-		int[][] arr = new int[n + 1][n + 1];
-		for (int i = 0; i < m; i++) {
-			int a = s.nextInt();
-			int b = s.nextInt();
-			arr[a][b] = arr[b][a] = 1;
-		}
-		for (int i = 1; i < n + 1; i++) {
-			for (int j = 1; j < n + 1; j++) {
-				if (arr[i][j] == 0) {
-					arr[i][j] = 5000;
-				}
-			}
-		}
 
-		for (int i = 1; i <= n; i++) {
-			bfs(arr, i);
+    static int INF = 1_000_000_000;
+    static int n;
+    static int r;
+    static int m;
+    static int k;
+    static int x;
+    static int[][] arr;
+    static int[] dx = {1, 0, -1, 0};
+    static int[] dy = {0, 1, 0, -1};
+    static List<Integer>[] list;
 
-		}
-		int result = Integer.MAX_VALUE;
-		int idx = 0;
-		for (int i = 1; i < n + 1; i++) {
-			int tmp = 0;
-			for (int j = 1; j < n + 1; j++) {
-				if (i != j) {
-					tmp += arr[i][j];
-				}
-			}
-			if (result > tmp) {
-				result = tmp;
-				idx = i;
-			}
-		}
-		System.out.println(idx);
-	}
+    static int count = 0;
+    static int[] arr2;
+    static int[][] dp;
+    static int[] visit = new int[n + 1];
 
-	private static void bfs(int[][] arr, int i) {
-		Queue<int[]> q = new LinkedList<>();
-		q.add(new int[] {i, 1});
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        list = new List[n + 1];
+        for (int i = 1; i <= n; i++) {
+            list[i] = new ArrayList<>();
+        }
+        for (int i = 0; i < m; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            list[a].add(b);
+            list[b].add(a);
+        }
+        int result = 1;
+        int sum = INF;
+        for (int i = 1; i <= n; i++) {
+            int bfs = bfs(i);
+            if (bfs < sum) {
+                result = i;
+                sum = bfs;
+            }
+        }
+        System.out.println(result);
 
-		boolean[] visit = new boolean[arr.length];
-		visit[i] = true;
-		while (!q.isEmpty()) {
-			int[] tmp = q.poll();
-			for (int j = 1; j < arr.length; j++) {
-				if (arr[tmp[0]][j] == 1 && !visit[j]) {
-					q.add(new int[] {j, tmp[1] + 1});
-					visit[j] = true;
-					arr[i][j] = Math.min(arr[i][j], tmp[1]);
-				}
-			}
-		}
+    }
 
-	}
+    private static int bfs(int cur) {
+        PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparingInt(o -> o[1]));
+        int[] dist = new int[n + 1];
+        Arrays.fill(dist, INF);
+        dist[cur] = 0;
+        q.add(new int[]{cur, 0});
+
+        while (!q.isEmpty()) {
+            int[] tmp = q.poll();
+            for (int i = 0; i < list[tmp[0]].size(); i++) {
+                int next = list[tmp[0]].get(i);
+
+                if (dist[next] > tmp[1] + 1) {
+                    dist[next] = tmp[1] + 1;
+                    q.add(new int[]{next, dist[next]});
+                }
+            }
+        }
+        return Arrays.stream(dist).sum() - INF;
+
+    }
+
+
 }
