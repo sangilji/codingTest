@@ -1,50 +1,80 @@
-import java.util.LinkedList;
-import java.util.Queue;
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.Comparator;
+import java.util.List;
+import java.util.PriorityQueue;
+import java.util.StringTokenizer;
 
 public class Main {
-    static int n;
-    static int m;
-    static boolean[][] visit;
-    static int map[][];
-    static int[] dx = {1, -1, 0, 0};
-    static int[] dy = {0, 0, -1, 1};
 
-    public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
-        n = s.nextInt();
-        m = s.nextInt();
-        visit = new boolean[n][m];
-        map = new int[n][m];
-        for (int i = 0; i < n; i++) {
-            String road = s.next();
-            for (int j = 0; j < m; j++) {
-                map[i][j] = road.charAt(j) - '0';
+    static int INF = 1_000_000_000;
+    static int n;
+    static int r;
+    static int m;
+    static int k;
+    static int x;
+    static int[][] arr;
+    static int[] dx = {1, 0, -1, 0};
+    static int[] dy = {0, 1, 0, -1};
+    static List<int[]>[] list;
+
+    static int count = 0;
+    static int[] arr2;
+    static int[][] dp;
+    static int[] visit = new int[n + 1];
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        arr = new int[n + 1][m + 1];
+        for (int i = 1; i <= n; i++) {
+            String[] tmp = br.readLine().split("");
+            for (int j = 1; j <= m; j++) {
+                arr[i][j] = Integer.parseInt(tmp[j - 1]);
             }
         }
-        System.out.println(bfs());
+        bfs();
+
+
     }
 
-    private static int bfs() {
-        Queue<int[]> q = new LinkedList<>();
-        q.add(new int[]{0, 0, 1});
-        visit[0][0] = true;
+    private static void bfs() {
+        PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparingInt(o -> o[2]));
+        int[][] dist = new int[n + 1][m + 1];
+        for (int i = 1; i <= n; i++) {
+            Arrays.fill(dist[i], INF);
+
+        }
+        dist[1][1] = 1;
+        q.add(new int[]{1, 1, 1});
 
         while (!q.isEmpty()) {
             int[] tmp = q.poll();
-            if (tmp[0] == map.length - 1 && tmp[1] == map[0].length - 1) {
-                return tmp[2];
+
+            if (tmp[0] == n && tmp[1] == m) {
+                System.out.println(tmp[2]);
+                return;
             }
             for (int i = 0; i < 4; i++) {
-                int x = tmp[0] + dx[i];
-                int y = tmp[1] + dy[i];
-                if (x < 0 || y < 0 || x >= map.length || y >= map[0].length || map[x][y] == 0 || visit[x][y]) {
+                int tx = dx[i] + tmp[0];
+                int ty = dy[i] + tmp[1];
+                if (tx <= 0 || ty <= 0 || tx > n || ty > m || arr[tx][ty] == 0) {
                     continue;
                 }
-                visit[x][y] = true;
-                q.add(new int[]{x, y, tmp[2] + 1});
+                if (dist[tx][ty] > tmp[2] + 1) {
+                    dist[tx][ty] = tmp[2] + 1;
+                    q.add(new int[]{tx, ty, tmp[2] + 1});
+                }
             }
         }
-        return -1;
+
     }
+
+
 }
