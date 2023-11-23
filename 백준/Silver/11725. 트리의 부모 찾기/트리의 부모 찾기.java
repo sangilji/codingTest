@@ -1,48 +1,63 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Main {
+	static int MOD = 1_000_000_009;
+	static int INF = 2_000_000_000;
+	static int n;
+	static int m;
+	static int x;
+	static int y;
 
-    static List<Integer>[] arr;
-    static int[] root;
-    static boolean[] visit;
-    public static void main(String[] args) throws IOException {
-        //코드를 작성하세요.
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        arr = new ArrayList[n+1];
-        root = new int[n + 1];
-        visit = new boolean[n+1];
-        for (int i = 0; i < n + 1; i++) {
-            arr[i]= new ArrayList<>();
-        }
-        StringTokenizer st;
-        for (int i = 0; i < n - 1; i++) {
-            st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            arr[a].add(b);
-            arr[b].add(a);
-        }
+	static int[] arr;
+	static int[][] visit;
+	static List<Integer> list = new ArrayList<>();
+	static List<Integer>[] graph;
+	static int[] parent;
+	static int[] dx = {0, 0, 1, -1};
+	static int[] dy = {1, -1, 0, 0};
+	static StringBuilder sb = new StringBuilder();
 
-        find(1);
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        for (int i = 2; i < n+1; i++) {
-            System.out.println(root[i]);
-        }
-    }
+		StringTokenizer st;
 
-    private static void find(int current) {
-        visit[current] = true;
-        for (int i = 0; i < arr[current].size(); i++) {
-            int tmp = arr[current].get(i);
-            if (!visit[tmp]) {
-                root[tmp] = current;
-                find(tmp);
-            }
-        }
-    }
+		n = Integer.parseInt(br.readLine());
+		graph = new List[n + 1];
+		parent = new int[n + 1];
+		for (int i = 0; i <= n; i++) {
+			graph[i] = new ArrayList<>();
+		}
+		for (int i = 0; i < n - 1; i++) {
+			st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			graph[a].add(b);
+			graph[b].add(a);
+		}
+
+		dfs(1, 0);
+		for (int i = 2; i <= n; i++) {
+			sb.append(parent[i]).append("\n");
+		}
+		System.out.println(sb);
+
+	}
+
+	private static void dfs(int cur, int prev) {
+
+		for (int i = 0; i < graph[cur].size(); i++) {
+			if (graph[cur].get(i) == prev) {
+				continue;
+			}
+			parent[graph[cur].get(i)] = cur;
+			dfs(graph[cur].get(i), cur);
+		}
+	}
 
 }
