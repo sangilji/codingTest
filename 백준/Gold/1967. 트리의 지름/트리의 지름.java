@@ -1,81 +1,79 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.StringTokenizer;
 
 public class Main {
+	static int MOD = 1_000_000_009;
+	static int INF = 2_000_000_000;
+	static int n;
+	static int m;
+	static int k;
+	static int x;
+	static int y;
 
-    static int max;
+	static int[] arr;
+	static List<Integer> list = new ArrayList<>();
+	static List<int[]>[] graph;
+	static int[] parent;
+	static int[] visit;
+	static int[] sz;
+	static int[] dx = {0, 0, 1, -1};
+	static int[] dy = {1, -1, 0, 0};
+	static StringBuilder sb = new StringBuilder();
 
-    static class Node {
-        int child;
-        int cost;
+	public static void main(String[] args) throws IOException {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 
-        public Node(int child, int cost) {
-            this.child = child;
-            this.cost = cost;
-        }
-    }
+		StringTokenizer st;
+		n = Integer.parseInt(br.readLine());
+		graph = new List[n + 1];
+		visit = new int[n + 1];
+		sz = new int[n + 1];
+		for (int i = 0; i <= n; i++) {
+			graph[i] = new ArrayList<>();
+		}
+		for (int i = 0; i < n - 1; i++) {
+			st = new StringTokenizer(br.readLine());
+			int a = Integer.parseInt(st.nextToken());
+			int b = Integer.parseInt(st.nextToken());
+			int c = Integer.parseInt(st.nextToken());
+			graph[a].add(new int[] {b, c});
+			graph[b].add(new int[] {a, c});
+		}
 
-    static ArrayList<Node>[] nodes;
+		dfs(1);
+		int max = 0;
+		int index = 0;
+		for (int i = 1; i <= n; i++) {
+			if (max < sz[i]) {
+				index = i;
+				max = sz[i];
+			}
+		}
+		Arrays.fill(visit, 0);
+		Arrays.fill(sz, 0);
+		dfs(index);
+		for (int i = 1; i <= n; i++) {
+			max = Math.max(max, sz[i]);
+		}
+		System.out.println(max);
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int n = Integer.parseInt(br.readLine());
-        nodes = new ArrayList[n + 1];
-        for (int i = 0; i < n + 1; i++) {
-            nodes[i] = new ArrayList<>();
-        }
-        StringTokenizer st;
-        for (int i = 0; i < n - 1; i++) {
-            st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            int cost = Integer.parseInt(st.nextToken());
-            nodes[a].add(new Node(b, cost));
-            nodes[b].add(new Node(a, cost));
-        }
+	}
 
+	private static void dfs(int cur) {
+		visit[cur] = 1;
+		for (int i = 0; i < graph[cur].size(); i++) {
+			if (visit[graph[cur].get(i)[0]] == 1) {
+				continue;
+			}
+			sz[graph[cur].get(i)[0]] = graph[cur].get(i)[1] +sz[cur];
+			dfs(graph[cur].get(i)[0]);
 
-        int result = dijk(1, n);
-        dijk(result, n);
-        System.out.println(max);
-    }
-
-    private static int dijk(int i, int n) {
-        boolean[] visit = new boolean[n + 1];
-        int[] dist = new int[n + 1];
-        Arrays.fill(dist, Integer.MAX_VALUE);
-        PriorityQueue<Node> q = new PriorityQueue<>(Comparator.comparingInt(o -> o.cost));
-        q.add(new Node(i, 0));
-        dist[i] = 0;
-        while (!q.isEmpty()) {
-
-            int tmp = q.poll().child;
-            if (visit[tmp]) {
-                continue;
-            }
-            visit[tmp] = true;
-
-            for (Node next : nodes[tmp]) {
-                if (dist[next.child] > dist[tmp] + next.cost) {
-                    dist[next.child] = dist[tmp] + next.cost;
-
-                    q.add(new Node(next.child, dist[next.child]));
-                }
-            }
-        }
-        max = Arrays.stream(dist)
-                .filter(d -> d != Integer.MAX_VALUE)
-                .max()
-                .getAsInt();
-        for (int j = 1; j < dist.length; j++) {
-            if (dist[j] == max) {
-                return j;
-            }
-        }
-        return 0;
-    }
-
+		}
+	}
 
 }
