@@ -128,6 +128,7 @@
 |17009. Winning Score|[링크](./%EB%B0%B1%EC%A4%80/Bronze/17009.%E2%80%85Winning%E2%80%85Score/Winning%E2%80%85Score.java)|
 |17010. Time to Decompress|[링크](./%EB%B0%B1%EC%A4%80/Bronze/17010.%E2%80%85Time%E2%80%85to%E2%80%85Decompress/README.md)|
 |17091. 단어 시계|[링크](./%EB%B0%B1%EC%A4%80/Bronze/17091.%E2%80%85%EB%8B%A8%EC%96%B4%E2%80%85%EC%8B%9C%EA%B3%84/README.md)|
+|17094. Serious Problem|[링크](./%EB%B0%B1%EC%A4%80/Bronze/17094.%E2%80%85Serious%E2%80%85Problem/README.md)|
 |1712. 손익분기점|[링크](./%EB%B0%B1%EC%A4%80/Bronze/1712.%E2%80%85%EC%86%90%EC%9D%B5%EB%B6%84%EA%B8%B0%EC%A0%90/README.md)|
 |17945. 통학의 신|[링크](./%EB%B0%B1%EC%A4%80/Bronze/17945.%E2%80%85%ED%86%B5%ED%95%99%EC%9D%98%E2%80%85%EC%8B%A0/README.md)|
 |1809. Moo|[링크](./%EB%B0%B1%EC%A4%80/Bronze/1809.%E2%80%85Moo/README.md)|
