@@ -1,26 +1,25 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 public class Main {
-
-    static int MOD = 1000000000;
+    static final int INF = 1_000_000_000;
     static int n;
-    static int r;
     static int m;
-    static int k;
-
-    static int[][] arr;
-    static int[] dx = {0, 1, 0, -1};
-    static int[] dy = {1, 0, -1, 0};
-    static List<Integer>[] list;
-
-    static int count = 0;
+    static List<int[]>[] list;
+    static int[] parent;
+    static int[] score;
+    static int[] cards;
+    static int[] arr;
+    static int[][][] dp;
+    static int[] sz;
     static int[] visit;
-    static int[][] dp;
+    static long count;
+
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -29,36 +28,37 @@ public class Main {
         st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
-        visit = new int[n + 1];
-        list = new List[n + 1];
-        for (int i = 0; i <= n; i++) {
-            list[i] = new ArrayList<>();
+        parent = new int[n + 1];
+
+        for (int i = 1; i <= n; i++) {
+            parent[i] = i;
         }
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-            list[a].add(b);
-            list[b].add(a);
-        }
-        for (int i = 1; i <= n; i++) {
-            if (visit[i] == 0) {
-                dfs(i);
-                count++;
+            int findA = find(a);
+            int findB = find(b);
+            if (findA != findB) {
+                if (findA < findB) {
+                    parent[findB] = findA;
+                } else {
+                    parent[findA] = findB;
+                }
             }
         }
-        System.out.println(count);
-
+        Set<Integer> s = new HashSet<>();
+        for (int i = 1; i <= n; i++) {
+            s.add(find(i));
+        }
+        System.out.println(s.size());
     }
 
-    private static void dfs(int cur) {
-        visit[cur] = 1;
-        for (int i = 0; i < list[cur].size(); i++) {
-            if (visit[list[cur].get(i)] == 1) {
-                continue;
-            }
-            dfs(list[cur].get(i));
+    private static int find(int a) {
+        if (parent[a] == a) {
+            return a;
         }
+        return parent[a] = find(parent[a]);
     }
 
 
