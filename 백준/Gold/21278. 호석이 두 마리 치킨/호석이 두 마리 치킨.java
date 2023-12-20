@@ -41,6 +41,9 @@ public class Main {
         }
 
         arr = new int[n + 1][n + 1];
+        for (int i = 0; i <= n; i++) {
+            Arrays.fill(arr[i], INF);
+        }
 
         for (int i = 1; i <= n; i++) {
             visit = new int[n + 1];
@@ -69,16 +72,15 @@ public class Main {
                 }
             }
         }
-        sb.append(a).append(" ").append(b).append(" ").append(min);
+        sb.append(Math.min(a, b)).append(" ").append(Math.max(a, b)).append(" ").append(min);
         System.out.println(sb);
 
 
     }
 
     private static void dfs(int start, int cur, int depth) {
-        visit[cur] = 1;
         for (int i = 0; i < list[cur].size(); i++) {
-            if (visit[list[cur].get(i)] == 1) {
+            if (arr[start][list[cur].get(i)] <= depth) {
                 continue;
             }
             arr[start][list[cur].get(i)] = depth;
