@@ -90,6 +90,7 @@
 |11104. Fridge of Your Dreams|[링크](./%EB%B0%B1%EC%A4%80/Bronze/11104.%E2%80%85Fridge%E2%80%85of%E2%80%85Your%E2%80%85Dreams/Fridge%E2%80%85of%E2%80%85Your%E2%80%85Dreams.java)|
 |11319. Count Me In|[링크](./%EB%B0%B1%EC%A4%80/Bronze/11319.%E2%80%85Count%E2%80%85Me%E2%80%85In/Count%E2%80%85Me%E2%80%85In.java)|
 |11367. Report Card Time|[링크](./%EB%B0%B1%EC%A4%80/Bronze/11367.%E2%80%85Report%E2%80%85Card%E2%80%85Time/README.md)|
+|1145. 적어도 대부분의 배수|[링크](./%EB%B0%B1%EC%A4%80/Bronze/1145.%E2%80%85%EC%A0%81%EC%96%B4%EB%8F%84%E2%80%85%EB%8C%80%EB%B6%80%EB%B6%84%EC%9D%98%E2%80%85%EB%B0%B0%EC%88%98/%EC%A0%81%EC%96%B4%EB%8F%84%E2%80%85%EB%8C%80%EB%B6%80%EB%B6%84%EC%9D%98%E2%80%85%EB%B0%B0%EC%88%98.java)|
 |1152. 단어의 개수|[링크](./%EB%B0%B1%EC%A4%80/Bronze/1152.%E2%80%85%EB%8B%A8%EC%96%B4%EC%9D%98%E2%80%85%EA%B0%9C%EC%88%98/%EB%8B%A8%EC%96%B4%EC%9D%98%E2%80%85%EA%B0%9C%EC%88%98.py)|
 |11549. Identifying tea|[링크](./%EB%B0%B1%EC%A4%80/Bronze/11549.%E2%80%85Identifying%E2%80%85tea/Identifying%E2%80%85tea.java)|
 |1157. 단어 공부|[링크](./%EB%B0%B1%EC%A4%80/Bronze/1157.%E2%80%85%EB%8B%A8%EC%96%B4%E2%80%85%EA%B3%B5%EB%B6%80/%EB%8B%A8%EC%96%B4%E2%80%85%EA%B3%B5%EB%B6%80.py)|
