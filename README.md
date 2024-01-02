@@ -154,6 +154,7 @@
 |21300. Bottle Return|[링크](./%EB%B0%B1%EC%A4%80/Bronze/21300.%E2%80%85Bottle%E2%80%85Return/Bottle%E2%80%85Return.java)|
 |21591. Laptop Sticker|[링크](./%EB%B0%B1%EC%A4%80/Bronze/21591.%E2%80%85Laptop%E2%80%85Sticker/Laptop%E2%80%85Sticker.cc)|
 |21598. SciComLove|[링크](./%EB%B0%B1%EC%A4%80/Bronze/21598.%E2%80%85SciComLove/SciComLove.java)|
+|21612. Boiling Water|[링크](./%EB%B0%B1%EC%A4%80/Bronze/21612.%E2%80%85Boiling%E2%80%85Water/Boiling%E2%80%85Water.cc)|
 |2163. 초콜릿 자르기|[링크](./%EB%B0%B1%EC%A4%80/Bronze/2163.%E2%80%85%EC%B4%88%EC%BD%9C%EB%A6%BF%E2%80%85%EC%9E%90%EB%A5%B4%EA%B8%B0/%EC%B4%88%EC%BD%9C%EB%A6%BF%E2%80%85%EC%9E%90%EB%A5%B4%EA%B8%B0.py)|
 |2231. 분해합|[링크](./%EB%B0%B1%EC%A4%80/Bronze/2231.%E2%80%85%EB%B6%84%ED%95%B4%ED%95%A9/%EB%B6%84%ED%95%B4%ED%95%A9.py)|
 |2292. 벌집|[링크](./%EB%B0%B1%EC%A4%80/Bronze/2292.%E2%80%85%EB%B2%8C%EC%A7%91/%EB%B2%8C%EC%A7%91.py)|
