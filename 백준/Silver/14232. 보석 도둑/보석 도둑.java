@@ -6,31 +6,40 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
+    static final int INF = 1_000_000_000;
+    static long n;
+    static long m;
+    static List<Integer>[] list;
+    static int[] parent;
+    static int[] score;
+    static int[] cards;
+    static int[][] arr;
+    static int[][][] dp;
+    static int[] sz;
+    static int[] visit;
+    static long count;
 
-	static long n;
-	static long m;
-
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		long tmp = n = Long.parseLong(st.nextToken());
-		List<Long> arr = new ArrayList<>();
-		for (long i = 2; i <= Math.sqrt(n); i++) {
-			while (tmp % i == 0) {
-				arr.add(i);
-				tmp /= i;
-			}
-		}
-		if (tmp != 1) {
-			arr.add(tmp);
-		}
-		StringBuilder sb = new StringBuilder();
-		sb.append(arr.size()).append("\n");
-		for (Long i : arr) {
-			sb.append(i).append(" ");
-		}
-		System.out.println(sb);
-
-	}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
+        n = Long.parseLong(br.readLine());
+        long tmp = n;
+        List<Long> list = new ArrayList<>();
+        for (long i = 2; i * i <= n; i++) {
+            while (tmp % i == 0) {
+                list.add(i);
+                tmp /= i;
+            }
+        }
+        if (tmp != 1) {
+            list.add(tmp);
+        }
+        sb.append(list.size()).append("\n");
+        for (Long i : list) {
+            sb.append(i).append(" ");
+        }
+        System.out.println(sb);
+    }
 
 }
