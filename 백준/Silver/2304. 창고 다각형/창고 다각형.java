@@ -1,72 +1,55 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
-import java.util.PriorityQueue;
 import java.util.StringTokenizer;
 
 public class Main {
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int n = Integer.parseInt(br.readLine());
-		List<int[]> arr = new ArrayList<>();
-		int max = -1;
-		for (int i = 0; i < n; i++) {
-			int[] tmp = new int[2];
-			StringTokenizer st = new StringTokenizer(br.readLine());
-			for (int j = 0; j < 2; j++) {
-				tmp[j] = Integer.parseInt(st.nextToken());
-			}
-			max = Math.max(max, tmp[1]);
-			arr.add(tmp);
-		}
-		if (n == 1) {
-			System.out.println(max);
-			return;
-		}
-		arr.sort(Comparator.comparing(o -> o[0]));
-		int height = 0;
-		int sum = 0;
-		int left = -1;
-		for (int i = 0; i < n-1; i++) {
-			int[] a = arr.get(i);
-			if (a[1] == max) {
-				left = a[0];
-				break;
-			}
-			int[] b = arr.get(i + 1);
-			height = Math.max(a[1], height);
-			sum += (b[0] - a[0]) * height;
-			if (b[1] == max) {
-				left = b[0];
-				break;
-			}
-		}
-		int right = -1;
-		height = 0;
-		for (int i = n-1; i > 0; i--) {
-			int[] a = arr.get(i);
-			if (a[1] == max) {
-				right = a[0];
-				break;
-			}
-			int[] b = arr.get(i - 1);
-			height = Math.max(a[1], height);
-			sum += (a[0] - b[0]) * height;
-			if (b[1] == max) {
-				right = b[0];
-				break;
-			}
-		}
-		System.out.println(sum + (right - left + 1) * max);
+    static int INF = 1_000_000_007;
+    static int n;
+    static int r;
+    static int m;
+    static int c;
+    static int x;
+    static int[] arr;
+    static int[] dx = {1, 0, -1, 0};
+    static int[] dy = {0, 1, 0, -1};
+    static List<int[]>[] list;
 
-	}
+    static long count = 0;
+    static int[] arr2;
+    static int[][] dp;
+    static long[] visit;
 
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
+        n = Integer.parseInt(br.readLine());
 
+        arr = new int[1002];
+
+        for (int i = 1; i <= n; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            arr[a] = Integer.parseInt(st.nextToken());
+        }
+        int[] suffix_max = new int[1002];
+        int[] prefix_max = new int[1002];
+        for (int i = 1; i <= 1000; i++) {
+            suffix_max[i] = Math.max(suffix_max[i - 1], arr[i]);
+        }
+        for (int i = 1000; i >= 1; i--) {
+            prefix_max[i] = Math.max(prefix_max[i + 1], arr[i]);
+        }
+        for (int i = 1; i <= 1000; i++) {
+            int min = Math.min(suffix_max[i], prefix_max[i]);
+
+            count += min;
+        }
+        System.out.println(count);
+    }
 
 
 }
