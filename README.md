@@ -510,6 +510,7 @@
 ### 🚀 Platinum
 | 문제번호 | 링크 |
 | ----- | ----- |
+|10090. Counting Inversions|[링크](./%EB%B0%B1%EC%A4%80/Platinum/10090.%E2%80%85Counting%E2%80%85Inversions/Counting%E2%80%85Inversions.java)|
 |1017. 소수 쌍|[링크](./%EB%B0%B1%EC%A4%80/Platinum/1017.%E2%80%85%EC%86%8C%EC%88%98%E2%80%85%EC%8C%8D/README.md)|
 |1090. 체커|[링크](./%EB%B0%B1%EC%A4%80/Platinum/1090.%E2%80%85%EC%B2%B4%EC%BB%A4/%EC%B2%B4%EC%BB%A4.java)|
 |10999. 구간 합 구하기 2|[링크](./%EB%B0%B1%EC%A4%80/Platinum/10999.%E2%80%85%EA%B5%AC%EA%B0%84%E2%80%85%ED%95%A9%E2%80%85%EA%B5%AC%ED%95%98%EA%B8%B0%E2%80%852/README.md)|
