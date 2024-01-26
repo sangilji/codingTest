@@ -1,124 +1,90 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
 
-	static int n;
-	static int m;
+    static int INF = 1_000_000_007;
+    static int MOD = 1_000_000_007;
+    static int n;
+    static int m;
+    static int k;
 
-	static long count = 0;
+    static int[][] arr;
+    static int[] arr2;
+    static int[] costs;
+    static int[] visit;
+    static int[] sz;
+    static int[] depth;
+    static int[] parent;
+    static int[] top;
+    static int[] in;
+    static int[] out;
+    static long[] tree_min;
+    static long[] tree_max;
+    static List<Integer>[] list;
+    static List<int[]>[] graph;
+    static int[] dx = {1, 0, 1, 1};
+    static int[] dy = {1, 1, 0, -1};
+    static int[][] arr1;
+    static int count = 0;
+    static int[][][][] dp;
 
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
+        n = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
+        int height = Integer.parseInt(st.nextToken());
+        int width = Integer.parseInt(st.nextToken());
+        arr = new int[n][2];
+        for (int i = 0; i < n; i++) {
+            st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < 2; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
+            }
+        }
+        Arrays.sort(arr, (o1, o2) -> {
+            if (o1[0] == o2[0]) {
+                return o1[1] - o2[1];
+            }
+            return o1[0] - o2[0];
+        });
 
+        for (int i = 0; i < n; i++) {
+            int x = arr[i][0];
+            int y = arr[i][1];
+            if (bs(i + 1, x + height, y) && bs(i + 1, x, y + width) && bs(i + 1, x + height, y + width)) {
+                count++;
+            }
+        }
+        System.out.println(count);
+    }
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringBuilder sb = new StringBuilder();
-		n = Integer.parseInt(br.readLine());
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int height = Integer.parseInt(st.nextToken());
-		int width = Integer.parseInt(st.nextToken());
+    private static boolean bs(int start, int x, int y) {
+        int end = n - 1;
+        while (start <= end) {
+            int mid = (start + end) >> 1;
+            if (arr[mid][0] < x) {
+                start = mid + 1;
+            } else if (arr[mid][0] > x) {
+                end = mid - 1;
+            } else {
+                if (arr[mid][1] < y) {
+                    start = mid + 1;
+                } else if (arr[mid][1] > y) {
+                    end = mid - 1;
+                } else {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 
-		int[][] arr = new int[n][2];
-		for (int i = 0; i < n; i++) {
-			st = new StringTokenizer(br.readLine());
-			for (int j = 0; j < 2; j++) {
-				arr[i][j] = Integer.parseInt(st.nextToken());
-			}
-		}
-		Arrays.sort(arr,(o1, o2) -> {
-			if (o1[0] == o2[0]) {
-				return o1[1] - o2[1];
-			}
-			return o1[0] - o2[0];
-		});
-
-		List<Integer> x = new ArrayList<>();
-		List<int[]> y = new ArrayList<>();
-		x.add(arr[0][0]);
-		y.add(new int[2]);
-		int index = 0;
-		y.get(0)[0]=0;
-		for (int i = 1; i < n; i++) {
-			if (x.get(index) == arr[i][0]) {
-				continue;
-			}
-			y.get(index)[1] = i - 1;
-			x.add(arr[i][0]);
-			y.add(new int[]{i,i});
-			index++;
-		}
-		y.get(index)[1]=n-1;
-
-		int start = 0;
-		int end = 1;
-		int count = 0;
-		while (end < x.size()) {
-			int tmp = x.get(end) - x.get(start);
-			if (tmp < height) {
-				end++;
-			} else if (tmp > height) {
-				start++;
-			} else {
-				int l = y.get(start)[0];
-				int startr = y.get(start)[1];
-				int r = l+1;
-				while (r <= startr) {
-					int tmp1 = arr[r][1] - arr[l][1];
-					if (tmp1 < width) {
-						r++;
-					} else if (tmp1 > width) {
-						l++;
-					} else {
-						if (find(arr,y.get(end), arr[r][1], arr[l][1])) {
-							count++;
-						}
-						r++;
-						l++;
-					}
-				}
-				start++;
-				end++;
-			}
-		}
-		System.out.println(count);
-	}
-
-	private static boolean find(int[][] arr,int[] size, int a, int b) {
-		int start = size[0];
-		int last = size[1];
-		boolean check = false;
-		while (start <= last) {
-			int mid = (start + last) >> 1;
-			if (arr[mid][1] == a) {
-				check = true;
-				break;
-			} else if (arr[mid][1] < a) {
-				start = mid +1;
-			}else{
-				last = mid -1;
-			}
-		}
-		if (!check) {
-			return false;
-		}
-		start = size[0];
-		last = size[1];
-		while (start <= last) {
-			int mid = (start + last) >> 1;
-			if (arr[mid][1] == b) {
-				return true;
-			} else if (arr[mid][1] < b) {
-				start = mid +1;
-			}else{
-				last = mid -1;
-			}
-		}
-		return false;
-	}
 
 }
