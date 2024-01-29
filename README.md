@@ -49,6 +49,7 @@
 | 문제번호 | 링크 |
 | ----- | ----- |
 |1001. A－B|[링크](./%EB%B0%B1%EC%A4%80/Bronze/1001.%E2%80%85A%EF%BC%8DB/A%EF%BC%8DB.py)|
+|10039. 평균 점수|[링크](./%EB%B0%B1%EC%A4%80/Bronze/10039.%E2%80%85%ED%8F%89%EA%B7%A0%E2%80%85%EC%A0%90%EC%88%98/%ED%8F%89%EA%B7%A0%E2%80%85%EC%A0%90%EC%88%98.java)|
 |1008. A／B|[링크](./%EB%B0%B1%EC%A4%80/Bronze/1008.%E2%80%85A%EF%BC%8FB/A%EF%BC%8FB.py)|
 |1009. 분산처리|[링크](./%EB%B0%B1%EC%A4%80/Bronze/1009.%E2%80%85%EB%B6%84%EC%82%B0%EC%B2%98%EB%A6%AC/%EB%B6%84%EC%82%B0%EC%B2%98%EB%A6%AC.java)|
 |10093. 숫자|[링크](./%EB%B0%B1%EC%A4%80/Bronze/10093.%E2%80%85%EC%88%AB%EC%9E%90/%EC%88%AB%EC%9E%90.java)|
