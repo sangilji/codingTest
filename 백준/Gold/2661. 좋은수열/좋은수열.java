@@ -1,64 +1,89 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayDeque;
-import java.util.Arrays;
-import java.util.PriorityQueue;
-import java.util.Queue;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
-	static int n;
-	static int[] arr;
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		n = Integer.parseInt(br.readLine());
-		arr = new int[n + 1];
-		dfs(0);
+    static int INF = 1_000_000_000;
+    static int MOD = 1_000_000_007;
+    static int n;
+    static int m;
+    static int k;
 
+    static int[] arr;
+    static int[] arr2;
+    static int[] costs;
+    static int[] visit;
+    static int[] visit2;
+    static int[] sz;
+    static int[] depth;
+    static int[] parent;
+    static int[] top;
+    static int[] in;
+    static int[] out;
+    static long[] tree_min;
+    static long[] tree_max;
+    static List<String> list;
+    static List<int[]>[] graph;
+    static int[] dx = {1, 0, 1, 1};
+    static int[] dy = {1, 1, 0, -1};
+    static int[][] arr1;
+    static int count = -1;
+    static int[][] dp;
+    static StringBuilder sb = new StringBuilder();
 
-	}
-	static boolean b = false;
-	private static void dfs(int depth) {
-		if (b) {
-			return;
-		}
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        n = Integer.parseInt(br.readLine());
+        arr = new int[n];
 
-		if (!check(depth)) {
-			return;
-		}
-		if (n == depth) {
-			StringBuilder sb = new StringBuilder();
-			for (int i = 1; i <= n; i++) {
-				sb.append(arr[i]);
-			}
-			System.out.println(sb);
-			b=true;
-			return;
-		}
+        recur(0);
+        System.out.println(sb);
+    }
 
-		for (int i = 1; i <= 3; i++) {
-			arr[depth+1] = i;
-			dfs(depth + 1);
-		}
-	}
-//
-	private static boolean check(int depth) {
-		for (int i = 2; i <= depth; i += 2) {
-			for (int j = 1; j <= depth - i + 1; j++) {
-				boolean b = false;
-				for (int k = j; k < j + i/2 ; k++) {
-					if (arr[k] != arr[k + i / 2]) {
-						b = true;
-					}
-				}
-				if (!b) {
-					return false;
-				}
-			}
-		}
-		return true;
-	}
+    private static void recur(int depth) {
+        if (count == 0) {
+            return;
+        }
+        if (depth == n) {
+            if (count == -1) {
+                for (int i = 0; i < n; i++) {
+                    sb.append(arr[i]);
+                }
+            }
+            count = 0;
+            return;
+        }
+
+        for (int i = 1; i <= 3; i++) {
+            arr[depth] = i;
+            if (check(depth)) {
+                continue;
+            }
+            recur(depth + 1);
+        }
+    }
+
+    private static boolean check(int cur) {
+        int count = 1;
+        for (int i = cur; i >= (cur / 2) + 1; i--) {
+            boolean b = true;
+            for (int j = 0; j < count; j++) {
+                if (arr[cur - j] != arr[cur - count - j]) {
+                    b = false;
+                    break;
+                }
+            }
+            count++;
+            if (b) {
+                return true;
+            }
+        }
+        return false;
+    }
+
 
 }
