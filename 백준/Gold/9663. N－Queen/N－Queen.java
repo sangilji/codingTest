@@ -1,72 +1,62 @@
-import java.util.Scanner;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.StringTokenizer;
 
 public class Main {
-    static int answer = 0;
-    public static void main(String[] args) {
-        Scanner s = new Scanner(System.in);
-        int n = s.nextInt();
-        int[][] arr = new int[n][n];
-        for(int i =0;i<n;i++){
-            arr[0][i]=1;
-            dfs(arr,1);
-            arr[0][i]=0;
-        }
-        System.out.println(answer);
+
+    static int INF = 1_000_000_000;
+    static int MOD = 1_000_000_007;
+    static int n;
+    static int m;
+    static int k;
+
+    static int[] arr;
+    static int[] visit;
+    static int[] dx = {1, 0, 1, 1};
+    static int[] dy = {1, 1, 0, -1};
+    static int[][] arr1;
+    static int count = 0;
+    static int[][] dp;
+    static StringBuilder sb = new StringBuilder();
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+
+        n = Integer.parseInt(br.readLine());
+        arr = new int[n];
+        recur(0);
+        System.out.println(count);
     }
-    private static void dfs(int[][] arr, int start){
-        if(start == arr.length){
-            answer++;
+
+    private static void recur(int depth) {
+        if (depth == n) {
+            count++;
             return;
         }
 
-        for(int j =0;j<arr.length;j++){
-            if(arr[start][j]==1){
-                continue;
-            }
-            if(check(arr,start,j)){
-                arr[start][j]=1;
-                dfs(arr,start+1);
-                arr[start][j]=0;
+        for (int i = 0; i < n; i++) {
+            arr[depth] = i;
+            if (check(depth)) {
+                recur(depth + 1);
             }
         }
     }
-    private static boolean check(int [][]arr, int x, int y){
-        for(int i=0; i<arr.length;i++){
-            if(arr[x][i]==1){
-                return false;
-            }
-        }
-        for(int i=0; i<arr.length;i++){
-            if(arr[i][y]==1){
-                return false;
-            }
-        }
-        int tmpx=x,tmpy=y;
-        while(tmpx>0 && tmpy>0){
-            tmpx--;
-            tmpy--;
-        }
-        for(int i=0;i<arr.length;i++){
-            if(tmpx+i>=arr.length || tmpy+i>=arr.length){
-                continue;
-            }
 
-            if(arr[tmpx+i][tmpy+i]==1){
+    private static boolean check(int depth) {
+
+        for (int i = 0; i < depth; i++) {
+            if (arr[depth] == arr[i]) {
                 return false;
             }
-        }
-        while(y<arr.length-1 && x>0){
-            x--;
-            y++;
-        }
-        for(int i =0;i<arr.length;i++){
-            if(x+i>=arr.length|| y-i <0){
-                continue;
-            }
-            if(arr[x+i][y-i]==1){
+            if (Math.abs(depth - i) == Math.abs(arr[depth] - arr[i])) {
                 return false;
             }
         }
         return true;
+
     }
+
+
 }
