@@ -44,7 +44,7 @@ public class Main {
 						continue;
 					}
 					list.add(tmp);
-					map.put(tmp, map.getOrDefault(map.get(tmp), 0) + 1);
+					map.put(tmp, map.getOrDefault(tmp, 0) + 1);
 				}
 			}
 			list.sort(Integer::compareTo);

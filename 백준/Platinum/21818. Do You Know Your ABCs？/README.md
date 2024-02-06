@@ -1,14 +1,18 @@
-# [Platinum IV] Do You Know Your ABCs? - 21818 
+# [Platinum V] Do You Know Your ABCs? - 21818 
 
 [문제 링크](https://www.acmicpc.net/problem/21818) 
 
 ### 성능 요약
 
-메모리: 67104 KB, 시간: 656 ms
+메모리: 58248 KB, 시간: 536 ms
 
 ### 분류
 
 브루트포스 알고리즘, 구현, 수학
+
+### 제출 일자
+
+2024년 2월 6일 13:00:14
 
 ### 문제 설명
 
