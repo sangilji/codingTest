@@ -258,6 +258,10 @@
 |9610. 사분면|[링크](./%EB%B0%B1%EC%A4%80/Bronze/9610.%E2%80%85%EC%82%AC%EB%B6%84%EB%A9%B4/README.md)|
 |9653. 스타워즈 로고|[링크](./%EB%B0%B1%EC%A4%80/Bronze/9653.%E2%80%85%EC%8A%A4%ED%83%80%EC%9B%8C%EC%A6%88%E2%80%85%EB%A1%9C%EA%B3%A0/README.md)|
 |9713. Sum of Odd Sequence|[링크](./%EB%B0%B1%EC%A4%80/Bronze/9713.%E2%80%85Sum%E2%80%85of%E2%80%85Odd%E2%80%85Sequence/README.md)|
+### 🚀 Bronze III
+| 문제번호 | 링크 |
+| ----- | ----- |
+|10103. 주사위 게임|[링크](./%EB%B0%B1%EC%A4%80/Bronze%20III/10103.%E2%80%85%EC%A3%BC%EC%82%AC%EC%9C%84%E2%80%85%EA%B2%8C%EC%9E%84/README.md)|
 ### 🚀 Diamond
 | 문제번호 | 링크 |
 | ----- | ----- |
