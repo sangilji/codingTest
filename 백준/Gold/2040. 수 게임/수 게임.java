@@ -40,16 +40,10 @@ public class Main {
                 arr[j] = Integer.parseInt(st.nextToken());
                 arr[j] += arr[j - 1];
             }
-//            int tmp = recur(n);
-            dp[0] = 0;
-            for (int j = 1; j <= n; j++) {
-                for (int l = j - 1; l >= 0; l--) {
-                    dp[j] = Math.min(dp[j], arr[j] - arr[l] - dp[l]);
-                }
-            }
-            if (dp[n] < 0) {
+            int tmp = recur(n);
+            if (tmp < 0) {
                 sb.append("A\n");
-            } else if (dp[n] > 0) {
+            } else if (tmp > 0) {
                 sb.append("B\n");
             } else {
                 sb.append("D\n");
@@ -59,15 +53,16 @@ public class Main {
     }
 
     private static int recur(int depth) {
+            if (dp[depth] != INF) {
+            return dp[depth];
+        }
         if (depth == 0) {
             return 0;
         }
-        if (dp[depth] != -1) {
-            return dp[depth];
-        }
+    
 
         int tmp = INF;
-        for (int i = depth - 1; i >= 0; i--) {
+        for (int i = 0; i < depth; i++) {
             tmp = Math.min(tmp, (arr[depth] - arr[i]) - recur(i));
         }
         return dp[depth] = tmp;
