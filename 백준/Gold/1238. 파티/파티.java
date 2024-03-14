@@ -11,33 +11,39 @@ import java.util.StringTokenizer;
 public class Main {
 
     static int INF = 1_000_000_000;
+    static int MOD = 1_000_000_009;
     static int n;
-    static int r;
     static int m;
     static int k;
-    static int x;
-    static int[][] arr;
-    static int[] dx = {1, 0, -1, 0};
-    static int[] dy = {0, 1, 0, -1};
-    static List<int[]>[] list;
 
+    static int[][] arr;
+    static int sum;
+    static int[] visit;
+    static int[] price;
+    static int[] dx = {0, 1, 0, -1};
+    static int[] dy = {1, 0, -1, 0};
+    static int[][] arr1;
     static int count = 0;
-    static int[] arr2;
-    static int[][] dp;
-    static int[] visit = new int[n + 1];
+    static int[] dp;
+    static StringBuilder sb = new StringBuilder();
+    static String[] s;
+    static List<int[]>[] list;
+    static List<int[]>[] list2;
+
+    static int[] result;
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
         StringTokenizer st;
         st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
         m = Integer.parseInt(st.nextToken());
-        x = Integer.parseInt(st.nextToken());
+        int x = Integer.parseInt(st.nextToken());
         list = new List[n + 1];
-        visit = new int[n + 1];
+        list2 = new List[n + 1];
         for (int i = 0; i <= n; i++) {
             list[i] = new ArrayList<>();
+            list2[i] = new ArrayList<>();
         }
         for (int i = 0; i < m; i++) {
             st = new StringTokenizer(br.readLine());
@@ -45,41 +51,45 @@ public class Main {
             int b = Integer.parseInt(st.nextToken());
             int c = Integer.parseInt(st.nextToken());
             list[a].add(new int[]{b, c});
+            list2[b].add(new int[]{a, c});
         }
-        for (int i = 1; i <= n; i++) {
-            if (i != x) {
-                bfs(i);
-            }
-        }
-        bfs(x);
+        visit = new int[n + 1];
+        bfs(list, x);
+        bfs(list2, x);
+
 
     }
 
-    private static void bfs(int cur) {
+    private static void bfs(List<int[]>[] list, int start) {
         PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparingInt(o -> o[1]));
         int[] dist = new int[n + 1];
         Arrays.fill(dist, INF);
-        dist[cur] = 0;
-        q.add(new int[]{cur, 0});
+        dist[start] = 0;
+        q.add(new int[]{start, 0});
 
         while (!q.isEmpty()) {
             int[] tmp = q.poll();
+            if (dist[tmp[0]] != tmp[1]) {
+                continue;
+            }
             for (int i = 0; i < list[tmp[0]].size(); i++) {
                 int[] next = list[tmp[0]].get(i);
-                if (dist[next[0]] > tmp[1] + next[1]) {
-                    dist[next[0]] = tmp[1] + next[1];
+                if (dist[next[0]] > next[1] + tmp[1]) {
+                    dist[next[0]] = next[1] + tmp[1];
                     q.add(new int[]{next[0], dist[next[0]]});
                 }
             }
         }
-        visit[cur] = dist[x];
-        if (cur == x) {
+        if (visit[0] == 0) {
+            visit = dist;
+        } else {
             int max = 0;
             for (int i = 1; i <= n; i++) {
                 max = Math.max(visit[i] + dist[i], max);
             }
             System.out.println(max);
         }
+
     }
 
 
