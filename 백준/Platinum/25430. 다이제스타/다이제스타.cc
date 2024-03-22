@@ -1,72 +1,26 @@
-#include <iostream>
-#include <vector>
-#include <algorithm>
-#include <queue>
-#include <map>
-
+#include<bits/stdc++.h>
+#define M 1e18
 using namespace std;
-typedef long long ll;
-typedef pair<ll, ll> pll;
-typedef pair<ll, pll> Node;   // {d, {w, curr}}
-const ll INF = 1e12+1;
-
-int N, M, S, E;
-vector<pll> adjs[50001];
-map<int, ll> dist[50001];   // dist[N][w] = d
-
-ll dijkstra() {
-    priority_queue<Node, vector<Node>, greater<Node>> pq;
-    ll ret = INF;
-    
-    dist[S][0] = 0;
-    pq.push({0, {0, S}});
-    
-    while (!pq.empty()) {
-        ll d = pq.top().first;
-        ll w = pq.top().second.first;
-        ll curr = pq.top().second.second;
-        pq.pop();
-        
-        if (curr == E) ret = min(ret, d);
-        if (d > dist[curr][w]) continue;
-        
-        for (auto adj: adjs[curr]) {
-            ll next = adj.first;
-            ll nw = adj.second;
-            
-            if (nw <= w) continue;
-            if (d+nw > dist[next][nw]) continue;
-            
-            dist[next][nw] = d+nw;
-            pq.push({d+nw, {nw, next}});
-        }
-    }
-    
-    return ret;
-}
-
+ 
+map <int, vector<pair<int, int>>> E;
+vector<long long> D(50001, M), T(50001, M);
+int n, m, s, e;
+ 
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL); cout.tie(NULL);
-    
-    cin >> N >> M;
-    for (int i=0; i<M; i++) {
-        int s, e, w;
-        cin >> s >> e >> w;
-        
-        adjs[s].push_back({e, w});
-        adjs[e].push_back({s, w});
-        
-        dist[s][w] = INF;
-        dist[e][w] = INF;
+    ios_base::sync_with_stdio(0); cin.tie(0);
+    cin >> n >> m;
+    for (int u, v, c; m--; E[c].emplace_back(u, v)) cin >> u >> v >> c;
+    cin >> s >> e; D[s] = 0;
+    for (auto& [c, V] : E)
+    {
+        for (auto& [u, v] : V)
+            T[u] = min(T[u], D[v] + c), T[v] = min(T[v], D[u] + c);
+        for (auto& [u, v] : V)
+        {
+            D[u] = min(D[u], T[u]), T[u] = M;
+            D[v] = min(D[v], T[v]), T[v] = M;
+        }
     }
-    cin >> S >> E;
-    
-    ll ans = dijkstra();
-    
-    if (ans == INF) cout << "DIGESTA";
-    else cout << ans;
-    
-    return 0;
+    D[e] == M ? cout << "DIGESTA" : cout << D[e];
 }
