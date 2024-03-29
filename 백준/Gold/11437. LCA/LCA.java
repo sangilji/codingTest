@@ -73,21 +73,6 @@ public class Main {
 
 	}
 
-	// private static void init(int node, int start, int end) {
-	// 	if (start == end) {
-	// 		tree[node] = parent[start];
-	// 		return;
-	// 	}
-	// 	int mid = (start + end) >> 1;
-	// 	init(node << 1, start, mid);
-	// 	init(node << 1 | 1, mid + 1, start);
-	// 	if (depth[tree[node << 1]] < depth[tree[node << 1 | 1]]) {
-	// 		tree[node] = tree[node << 1];
-	// 	} else {
-	// 		tree[node] = tree[node << 1 | 1];
-	// 	}
-	// }
-
 	private static int query(int a, int b) {
 		while (top[a] != top[b]) {
 			if (depth[top[a]] < depth[top[b]]) {
