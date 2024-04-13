@@ -282,6 +282,7 @@
 |8393. 합|[링크](./%EB%B0%B1%EC%A4%80/Bronze/8393.%E2%80%85%ED%95%A9/README.md)|
 |8958. OX퀴즈|[링크](./%EB%B0%B1%EC%A4%80/Bronze/8958.%E2%80%85OX%ED%80%B4%EC%A6%88/OX%ED%80%B4%EC%A6%88.py)|
 |9063. 대지|[링크](./%EB%B0%B1%EC%A4%80/Bronze/9063.%E2%80%85%EB%8C%80%EC%A7%80/README.md)|
+|9295. 주사위|[링크](./%EB%B0%B1%EC%A4%80/Bronze/9295.%E2%80%85%EC%A3%BC%EC%82%AC%EC%9C%84/README.md)|
 |9316. Hello Judge|[링크](./%EB%B0%B1%EC%A4%80/Bronze/9316.%E2%80%85Hello%E2%80%85Judge/Hello%E2%80%85Judge.java)|
 |9325. 얼마？|[링크](./%EB%B0%B1%EC%A4%80/Bronze/9325.%E2%80%85%EC%96%BC%EB%A7%88%EF%BC%9F/%EC%96%BC%EB%A7%88%EF%BC%9F.java)|
 |9498. 시험 성적|[링크](./%EB%B0%B1%EC%A4%80/Bronze/9498.%E2%80%85%EC%8B%9C%ED%97%98%E2%80%85%EC%84%B1%EC%A0%81/README.md)|
