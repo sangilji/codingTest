@@ -1,26 +1,41 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.StringTokenizer;
 
 public class Main {
-    static final int INF = 1_000_000_000;
+
+    static int INF = 1_000_000_000;
+    static int MOD = 1_000_000_009;
     static int n;
     static int m;
-    static List<Integer>[] list;
-    static int[] parent;
-    static int[] score;
-    static int[] cards;
+    static int k;
+
     static int[][] arr;
-    static int[][][] dp;
-    static int[] sz;
+    static int[] tree;
+    static double sum;
     static int[] visit;
-    static long count;
+    static int[] parent;
+    static int[] size;
+    static int[] min;
+    static int[] max;
+    static int[] dx = {1, -1, 1, -1};
+    static int[] dy = {1, 1, -1, -1};
+    static int[] arr1;
+    static int count = 0;
+    static long[] dp;
+    static StringBuilder sb = new StringBuilder();
+    static List<Integer>[] list;
+    static List<Integer>[] list2;
+
+    static int[] result;
+    static Set<String> set = new HashSet<>();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
         StringTokenizer st;
         st = new StringTokenizer(br.readLine());
         n = Integer.parseInt(st.nextToken());
@@ -35,25 +50,27 @@ public class Main {
         int result = INF;
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                for (int k = 0; k < n; k++) {
-                    int count = 0;
+                for (int l = 0; l < n; l++) {
                     int a = arr[i][0];
                     int b = arr[j][1];
-                    int c = arr[k][2];
-                    for (int l = 0; l < n; l++) {
-                        if (arr[l][0] <= a && arr[l][1] <= b && arr[l][2] <= c) {
+                    int c = arr[l][2];
+                    for (int o = 0; o < n; o++) {
+                        if (a >= arr[o][0] && b >= arr[o][1] && c >= arr[o][2]) {
                             count++;
                         }
+                        if (count >= m) {
+                            result = Math.min(result, a + b + c);
+                            break;
+                        }
                     }
-                    if (count >= m) {
-                        result = Math.min(result, a + b + c);
-                    }
+                    count = 0;
+
                 }
             }
         }
         System.out.println(result);
 
-    }
 
+    }
 
 }
