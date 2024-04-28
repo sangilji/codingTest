@@ -38,7 +38,6 @@ public class Main {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st;
         while (true) {
-            sb = new StringBuilder();
             String t = br.readLine();
             if (t == null) {
                 break;
@@ -76,9 +75,9 @@ public class Main {
                     }
                 }
             }
-            System.out.println(sb);
-
+            sb.append("\n");
         }
+        System.out.println(sb);
 
     }
 
