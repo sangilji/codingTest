@@ -1,0 +1,78 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.StringTokenizer;
+
+public class Main {
+
+    static int INF = 1_000_000_000;
+    static int MOD = 1_000_000_009;
+    static int n;
+    static int m;
+    static int k;
+
+    static int[] arr;
+    static int[] tree;
+    static double sum;
+    static int[] visit;
+    static int[] parent;
+    static int[] size;
+    static int[] min;
+    static int[] max;
+    static int[] dx = {1, -1, 1, -1};
+    static int[] dy = {1, 1, -1, -1};
+    static int[] arr1;
+    static int count = 0;
+    static long[] dp;
+    static StringBuilder sb = new StringBuilder();
+    static List<Integer>[] list;
+    static List<Integer>[] list2;
+
+    static int[] result;
+    static Set<Integer> set = new HashSet<>();
+    static int l;
+    static int r;
+    static int x;
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        while (true) {
+            arr = Arrays.stream(br.readLine().split(" ")).mapToInt(Integer::parseInt).toArray();
+            visit = new int[7];
+            if (arr[0] == 0) {
+                break;
+            }
+            n = arr[0];
+            recur(1, 0);
+            sb.append("\n");
+        }
+        System.out.println(sb);
+
+
+    }
+
+    private static void recur(int depth, int count) {
+        if (count > 6) {
+            return;
+        }
+        if (depth == n + 1) {
+            if (count == 6) {
+                for (int i = 0; i < 6; i++) {
+                    sb.append(arr[visit[i]]).append(" ");
+                }
+                sb.append("\n");
+            }
+            return;
+        }
+        visit[count] = depth;
+        recur(depth + 1, count + 1);
+        recur(depth + 1, count);
+    }
+
+
+}
