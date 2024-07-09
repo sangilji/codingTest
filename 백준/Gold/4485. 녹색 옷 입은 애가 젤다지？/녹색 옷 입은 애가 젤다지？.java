@@ -1,60 +1,83 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+import java.util.*;
 
+
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
+    static int INF = 1_000_000_000;
     static int n;
+    static int m;
+    static int k;
+    static int str;
+    static int[][] arr;
+    static int[] tree;
+    static int[] treeMaxIndex;
     static int[] dx = {1, 0, -1, 0};
+
     static int[] dy = {0, 1, 0, -1};
+    static long[] dp;
+    static List<int[]>[] list;
+    static List<int[]>[] list2;
+    static int[] visit;
+    static StringBuilder sb = new StringBuilder();
+    static int count;
+
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-        int t = 1;
+        StringTokenizer st;
+//        st = new StringTokenizer(br.readLine());
+
         while (true) {
+            count++;
             n = Integer.parseInt(br.readLine());
             if (n == 0) {
                 break;
             }
-            int[][] map = new int[n][n];
+            arr = new int[n][n];
             for (int i = 0; i < n; i++) {
-                StringTokenizer st = new StringTokenizer(br.readLine());
+                st = new StringTokenizer(br.readLine());
                 for (int j = 0; j < n; j++) {
-                    map[i][j] = Integer.parseInt(st.nextToken());
+                    arr[i][j] = Integer.parseInt(st.nextToken());
                 }
             }
-            sb.append("Problem ").append(t).append(": ");
-            t++;
-            sb.append(bfs(map)).append("\n");
+            sb.append("Problem ").append(count).append(": ");
+            sb.append(bfs(0, 0)).append("\n");
         }
         System.out.println(sb);
 
+
+
     }
 
-    private static int bfs(int[][] map) {
+    private static int bfs(int x, int y) {
         PriorityQueue<int[]> q = new PriorityQueue<>(Comparator.comparingInt(o -> o[2]));
-        q.add(new int[]{0,0,map[0][0]});
-        boolean[][] visit = new boolean[n][n];
-        visit[0][0] = true;
+        int[][] dist = new int[n][n];
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(dist[i], INF);
+        }
+        dist[x][y] = arr[x][y];
+        q.add(new int[]{x, y, dist[x][y]});
         while (!q.isEmpty()) {
             int[] tmp = q.poll();
+            if (tmp[2]!=dist[tmp[0]][tmp[1]]) continue;
 
-            if (tmp[0] == n - 1 && tmp[1] == n - 1) {
-                return tmp[2];
-            }
             for (int i = 0; i < 4; i++) {
-                int x = tmp[0] + dx[i];
-                int y = tmp[1] + dy[i];
-                if (x<0||y<0|| x>=n || y>=n || visit[x][y]){
-                    continue;
+                int tx = tmp[0] + dx[i];
+                int ty = tmp[1] + dy[i];
+                if (tx < 0 || tx >= n || ty < 0 || ty >= n) continue;
+                if (dist[tx][ty] > tmp[2] + arr[tx][ty]) {
+                    dist[tx][ty] = tmp[2] + arr[tx][ty];
+                    q.add(new int[]{tx, ty, dist[tx][ty]});
                 }
-                visit[x][y] = true;
-                q.add(new int[]{x,y,tmp[2]+map[x][y]});
             }
         }
 
-        return 0;
+        return dist[n - 1][n - 1];
+
     }
+
+
 }
