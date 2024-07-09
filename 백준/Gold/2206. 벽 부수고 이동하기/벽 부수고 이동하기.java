@@ -1,64 +1,88 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
-import java.io.*;
+
+
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-	private static int n;
-	private static int m;
-	private static int[][] map;
-	private static int[] dx = {1, -1, 0, 0};
-	private static int[] dy = {0, 0, 1, -1};
+    static int INF = 1_000_000_000;
+    static int n;
+    static int m;
+    static int k;
+    static int str;
+    static int[][] arr;
+    static int[] tree;
+    static int[] treeMaxIndex;
+    static int[] dx = {1, 0, -1, 0};
 
-	public static void main(String[] args) throws IOException{
+    static int[] dy = {0, 1, 0, -1};
+    static long[] dp;
+    static List<int[]>[] list;
+    static List<int[]>[] list2;
+    static int[] visit;
+    static StringBuilder sb = new StringBuilder();
+    static int count;
+
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-		n = Integer.parseInt(st.nextToken());
-		m = Integer.parseInt(st.nextToken());
-		map = new int[n][m];
+        StringTokenizer st;
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        arr = new int[n + 1][m + 1];
+        for (int i = 1; i <= n; i++) {
+            char[] tmp = br.readLine().toCharArray();
+            for (int j = 1; j <= m; j++) {
+                arr[i][j] = tmp[j - 1] - '0';
+            }
+        }
 
-		for (int i = 0; i < n; i++) {
-			String[] input = br.readLine().split("");
-			for (int j = 0; j < m; j++) {
-				map[i][j] = Integer.parseInt(input[j]);
-			}
-		}
+        int[][] start = bfs(1, 1);
+        int[][] end = bfs(n, m);
+        int min = start[n][m];
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= m; j++) {
+                if (arr[i][j] == 1) {
+                    min = Math.min(min, start[i][j] + end[i][j]);
+                }
+            }
+        }
+        if (min == INF) {
+            System.out.println(-1);
+            return;
+        }
+        System.out.println(min + 1);
 
-		System.out.println(bfs());
-	}
+    }
 
-	private static int bfs() {
-		Queue<int[]> q = new LinkedList<>();
-		q.add(new int[] {0, 0, 1, 0});
-		boolean[][] visit = new boolean[n][m];
+    private static int[][] bfs(int x, int y) {
+        Queue<int[]> q = new ArrayDeque<>();
+        int[][] dist = new int[n + 1][m + 1];
+        for (int i = 1; i <= n; i++) {
+            Arrays.fill(dist[i], INF);
+        }
+        q.add(new int[]{x, y, 0});
+        dist[x][y] = 0;
+        while (!q.isEmpty()) {
+            int[] tmp = q.poll();
 
-		map[0][0] = 2;
+            for (int i = 0; i < 4; i++) {
+                int tx = dx[i] + tmp[0];
+                int ty = dy[i] + tmp[1];
+                if (tx <= 0 || ty <= 0 || tx > n || ty > m || dist[tx][ty] != INF) {
+                    continue;
+                }
+                dist[tx][ty] = dist[tmp[0]][tmp[1]] + 1;
+                if (arr[tx][ty] == 0) {
+                    q.add(new int[]{tx, ty, dist[tx][ty]});
+                }
+            }
 
-		while (!q.isEmpty()) {
-			int[] tmp = q.poll();
-			if (tmp[0] == n - 1 && tmp[1] == m - 1) {
-				return tmp[2];
-			}
-			for (int i = 0; i < 4; i++) {
-				int x = tmp[0] + dx[i];
-				int y = tmp[1] + dy[i];
+        }
+        return dist;
+    }
 
-				if (x < 0 || x >= n || y < 0 || y >= m) {
-					continue;
-				}
-				if (tmp[3] == 1) {
-					if (!visit[x][y]&&map[x][y] == 0) {
-						visit[x][y]=true;
-						q.add(new int[] {x, y, tmp[2] + 1, tmp[3]});
-					}
-				} else {
-					if (map[x][y] == 0) {
-						map[x][y] = 2;
-						q.add(new int[] {x, y, tmp[2] + 1, tmp[3]});
-					} else if (map[x][y] == 1) {
-						map[x][y] = 2;
-						q.add(new int[] {x, y, tmp[2] + 1, 1});
-					}
-				}
-			}
-		}
-		return -1;
-	}
+
 }
