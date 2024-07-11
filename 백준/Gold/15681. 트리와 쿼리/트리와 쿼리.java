@@ -1,69 +1,71 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.StringTokenizer;
+import java.util.*;
 
+
+//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
-	static int MOD = 1_000_000_009;
-	static int INF = 2_000_000_000;
-	static int n;
-	static int m;
-	static int k;
-	static int x;
-	static int y;
+    static int INF = 1_000_000_000;
+    static int n;
+    static int m;
+    static int k;
+    static int str;
+    static int[] arr;
+    static int[] tree;
+    static int[] treeMaxIndex;
+    static int[] dx = {1, 0, -1, 0};
 
-	static int[] arr;
-	static List<Integer> list = new ArrayList<>();
-	static List<Integer>[] graph;
-	static int[] parent;
-	static int[] visit;
-	static int[] sz;
-	static int[] dx = {0, 0, 1, -1};
-	static int[] dy = {1, -1, 0, 0};
-	static StringBuilder sb = new StringBuilder();
+    static int[] dy = {0, 1, 0, -1};
+    static int[][] dp;
+    static List<Integer>[] list;
+    static List<int[]>[] list2;
+    static int[] visit;
+    static int[] sz;
+    static StringBuilder sb = new StringBuilder();
+    static int count;
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
+        st = new StringTokenizer(br.readLine());
+        n = Integer.parseInt(st.nextToken());
+        m = Integer.parseInt(st.nextToken());
+        k = Integer.parseInt(st.nextToken());
+        list = new List[n + 1];
+        for (int i = 0; i <= n; i++) {
+            list[i] = new ArrayList<>();
+        }
+        for (int i = 0; i < n - 1; i++) {
+            st = new StringTokenizer(br.readLine());
+            int a = Integer.parseInt(st.nextToken());
+            int b = Integer.parseInt(st.nextToken());
+            list[a].add(b);
+            list[b].add(a);
+        }
+        visit = new int[n + 1];
+        sz = new int[n + 1];
+        dfs(m);
+        for (int i = 0; i < k; i++) {
+            int tmp = Integer.parseInt(br.readLine());
+            sb.append(sz[tmp]).append("\n");
+        }
+        System.out.println(sb);
 
-		StringTokenizer st;
-		st = new StringTokenizer(br.readLine());
-		n = Integer.parseInt(st.nextToken());
-		m = Integer.parseInt(st.nextToken());
-		k = Integer.parseInt(st.nextToken());
-		graph = new List[n + 1];
-		visit = new int[n + 1];
-		sz = new int[n + 1];
-		for (int i = 0; i <= n; i++) {
-			graph[i] = new ArrayList<>();
-		}
-		for (int i = 0; i < n - 1; i++) {
-			st = new StringTokenizer(br.readLine());
-			int a = Integer.parseInt(st.nextToken());
-			int b = Integer.parseInt(st.nextToken());
-			graph[a].add(b);
-			graph[b].add(a);
-		}
+    }
 
-		dfs(m);
-		for (int i = 0; i < k; i++) {
-			sb.append(sz[Integer.parseInt(br.readLine())]).append("\n");
-		}
-		System.out.println(sb);
+    private static void dfs(int cur) {
+        visit[cur]  =1;
+        sz[cur]=1;
+        for (int i = 0; i < list[cur].size(); i++) {
+            if (visit[list[cur].get(i)]==1) {
+                continue;
+            }
+            dfs(list[cur].get(i));
+            sz[cur] += sz[list[cur].get(i)];
+        }
+    }
 
-	}
-
-	private static void dfs(int cur) {
-		visit[cur] = 1;
-		sz[cur] = 1;
-		for (int i = 0; i < graph[cur].size(); i++) {
-			if (visit[graph[cur].get(i)] == 1) {
-				continue;
-			}
-			dfs(graph[cur].get(i));
-			sz[cur] += sz[graph[cur].get(i)];
-		}
-	}
 
 }
