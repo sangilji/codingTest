@@ -2,64 +2,98 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.*;
-import java.util.StringTokenizer;
-import java.util.stream.Collectors;
-
 
 public class Main {
-    static String[] s1;
-    static String[] s2;
+    static int INF = 1_000_000_000;
+    static int MOD = 1_000_000_007;
+    static int n;
+    static int m;
+    static int k;
+
+    static int[] arr;
+    static int[] arr2;
+    static int[] costs;
+    static int[] visit;
+    static int[] visit2;
+    static int[] sz;
+    static int[] depth;
+    static int[] parent;
+    static int[] top;
+    static int[] in;
+    static int[] out;
+    static long[] tree_min;
+    static long[] tree_max;
     static List<Integer>[] list;
+    static List<int[]>[] graph;
+    static int[] dx = {1, 0, 1, 1};
+    static int[] dy = {1, 1, 0, -1};
+    static int[][] arr1;
+    static int count = 0;
+    static int[][][][] dp;
+    static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
-        //코드를 작성하세요.
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
+
         int t = Integer.parseInt(br.readLine());
         for (int i = 0; i < t; i++) {
-            int n = Integer.parseInt(br.readLine());
-            list = new ArrayList[n + 1];
-            for (int j = 0; j < n + 1; j++) {
+            n = Integer.parseInt(br.readLine());
+            list = new List[n + 1];
+            parent = new int[n + 1];
+            arr = new int[n + 1];
+            for (int j = 0; j <= n; j++) {
+                parent[j] = j;
+            }
+            for (int j = 0; j <= n; j++) {
                 list[j] = new ArrayList<>();
             }
-            for (int j = 0; j < n - 1; j++) {
-                StringTokenizer st = new StringTokenizer(br.readLine());
+            for (int j = 0; j < n-1; j++) {
+                st = new StringTokenizer(br.readLine());
                 int a = Integer.parseInt(st.nextToken());
                 int b = Integer.parseInt(st.nextToken());
-                list[b].add(a);
+                list[a].add(b);
+                arr[b]++;
             }
-            StringTokenizer st = new StringTokenizer(br.readLine());
+            int start = 0;
+            for (int j = 1; j <=n; j++) {
+                if (arr[j] == 0) {
+                    start = j;
+                }
+            }
+            dfs(start);
+            st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-            find(a,0, "");
-            find(b,1, "");
-            String result ="";
-            for (int j = s1.length-1,k = s2.length-1 ;j >=0 &&k>=0 ; j--,k--) {
-                if (s1[j].equals(s2[k])){
-                    result = s1[j];
-                } else{
-                    break;
+            Stack<Integer> s1 = new Stack<>();
+            Stack<Integer> s2 = new Stack<>();
+            find(a,s1);
+            find(b, s2);
+            int result = 0;
+            while (!s1.isEmpty() && !s2.isEmpty()) {
+                int a1 = s1.pop();
+                int a2 = s2.pop();
+                if (a1 == a2) {
+                    result = a1;
                 }
             }
             sb.append(result).append("\n");
         }
         System.out.println(sb);
-
     }
 
-    private static void find(int a,int num, String nodes) {
-        nodes+=a+" ";
-        if (list[a].size()==0){
-            if (num ==0) {
-                s1 = nodes.split(" ");
-            }
-            else{
-                s2 = nodes.split(" ");
-            }
-            return;
+    private static int find(int a,Stack<Integer> s) {
+        s.add(a);
+        if (parent[a] == a) {
+            return a;
         }
-        for (int i = 0; i < list[a].size(); i++) {
-            find(list[a].get(i),num,nodes);
+        return find(parent[a],s);
+    }
+
+    private static void dfs(int cur) {
+        for (int i = 0; i < list[cur].size(); i++) {
+            parent[list[cur].get(i)]= cur;
+            dfs(list[cur].get(i));
         }
     }
 }
