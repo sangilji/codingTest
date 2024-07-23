@@ -1,29 +1,20 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.util.Scanner;
+import java.util.SimpleTimeZone;
 
 public class Main {
-
-
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-        char[][] c = new char[5][];
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        String[] a = new String[5];
         for (int i = 0; i < 5; i++) {
-            c[i] = br.readLine().toCharArray();
+            a[i] = sc.next();
         }
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < 15; i++) { 
             for (int j = 0; j < 5; j++) {
-                if (c[j].length > i) {
-                    sb.append(c[j][i]);
+                if(a[j].length() > i){ 
+                    System.out.print(a[j].charAt(i)); 
                 }
             }
         }
-        System.out.println(sb);
+
     }
-
-
-
-
 }
