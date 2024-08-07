@@ -1,30 +1,37 @@
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.util.*;
 
 public class Main {
-	public static void main(String[] args) {
-		Scanner s = new Scanner(System.in);
-		int n = s.nextInt();
-		int m = s.nextInt();
-		Map<String, Integer> map = new TreeMap<>();
-		for (int i = 0; i < n; i++) {
-			map.put(s.next(), 1);
-		}
-		for (int i = 0; i < m; i++) {
-			String name = s.next();
-			map.put(name, map.getOrDefault(name, 0) + 1);
-		}
-		List<String> arr = map.entrySet()
-			.stream()
-			.filter(stringIntegerEntry -> stringIntegerEntry.getValue() == 2)
-			.map(Map.Entry::getKey)
-			.collect(Collectors.toList());
-		System.out.println(arr.size());
-		for (String i : arr) {
-			System.out.println(i);
-		}
-	}
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br =
+                new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        int n = Integer.parseInt(st.nextToken());
+        int m = Integer.parseInt(st.nextToken());
+
+        Map<String , String> map = new HashMap<>();
+        for (int i = 0; i < n; i++) {
+            map.put(br.readLine(),"");
+        }
+        int count = 0;
+        List<String> list = new ArrayList<>();
+        for (int i = 0; i < m; i++) {
+            String tmp = br.readLine();
+            if (map.containsKey(tmp)) {
+                count++;
+                list.add(tmp);
+            }
+        }
+        list.sort(String::compareTo);
+        System.out.println(count);
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i));
+        }
+
+    }
+
+
 }
