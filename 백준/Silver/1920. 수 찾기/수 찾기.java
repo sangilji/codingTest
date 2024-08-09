@@ -1,31 +1,31 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.StringTokenizer;
 
 public class Main {
+    public static void main(String[] args) throws IOException {
+        BufferedReader br =
+                new BufferedReader(new InputStreamReader(System.in));
+        int a = Integer.parseInt(br.readLine());
+        StringTokenizer st = new StringTokenizer(br.readLine());
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int i = 0; i < a; i++) {
+            int num1 = Integer.parseInt(st.nextToken()); // 토큰으로 값을 받고,
+            map.put(num1, i); // map에 추가한다.
+        }
 
-	public static void main(String[] args) throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		int n = Integer.parseInt(br.readLine());
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		Set<Integer> s = new HashSet<>();
-		for (int i = 0; i < n; i++) {
-			s.add(Integer.parseInt(st.nextToken()));
-		}
-		StringBuilder sb = new StringBuilder();
-		int a = Integer.parseInt(br.readLine());
-		st = new StringTokenizer(br.readLine());
-		for (int i = 0; i < a; i++) {
-			if (s.contains(Integer.parseInt(st.nextToken()))) {
-				sb.append(1).append("\n");
-			} else {
-				sb.append(0).append("\n");
-			}
-		}
-		System.out.println(sb);
-	}
-
+        int b = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine()); // 이미 사용중, 다시 선언하여 초기화
+        for (int i = 0; i < b; i++) {
+            int num2 = Integer.parseInt(st.nextToken());
+            if (map.containsKey(num2)) {
+                System.out.println(1);
+            } else {
+                System.out.println(0);
+            }
+        }
+    }
 }
