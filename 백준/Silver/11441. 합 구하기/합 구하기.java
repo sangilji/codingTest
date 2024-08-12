@@ -4,6 +4,7 @@ import java.io.*;
 class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
         StringTokenizer st;
         int n = Integer.parseInt(br.readLine());
         int[] arr = new int[n+1];
@@ -17,7 +18,8 @@ class Main {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-            System.out.println(arr[b]-arr[a-1]);
+            sb.append(arr[b]-arr[a-1]).append("\n");
         }
+        System.out.println(sb);
     }
 }
